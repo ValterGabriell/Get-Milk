@@ -6,9 +6,11 @@ import CustomButton from '../../components/CustomBtn';
 import { useNavigation } from "@react-navigation/native";
 import { users } from '../../dto/users.json'
 import { Snackbar } from 'react-native-paper';
+import { checkConnected } from '../../services/Handle/NetworkConnection';
 
 const LoginScreen = () => {
 
+  const [connected, setConnected] = useState(false)
 
   const [cpf, setCpf] = useState()
   const [password, setPassword] = useState()
@@ -26,66 +28,78 @@ const LoginScreen = () => {
     users.forEach((user) => {
       if (user.cpf == cpf) {
         if (user.senha == password) {
-         navigation.navigate("Hodometro_Screen")
-        }else{
+          navigation.navigate("Hodometro_Screen")
+        } else {
           onToggleSnackBar("Senha incorreta")
         }
-      }else{
+      } else {
         onToggleSnackBar("CPF incorreto")
       }
     })
-
-
-
-
   }
+
+  checkConnected().then((res) => {
+    setConnected(res)
+  })
+
+
 
 
 
 
   return <>
-    <SafeAreaView style={{ backgroundColor: '#73c1ec', height: "100%" }}>
+    {
+      connected ?
+        <SafeAreaView SafeAreaView style={{ backgroundColor: '#73c1ec', height: "100%" }}>
 
-      <View style={styles.header}>
-        <View style={styles.innerHeader}>
-          <Text style={styles.txtWelcome}>Olá, seja bem vindo!</Text>
-          <Text style={styles.txtSignIn}>Entre na sua conta!</Text>
-        </View>
+          <View style={styles.header}>
+            <View style={styles.innerHeader}>
+              <Text style={styles.txtWelcome}>Olá, seja bem vindo!</Text>
+              <Text style={styles.txtSignIn}>Entre na sua conta!</Text>
+            </View>
 
-        <FontAwesome5 style={{ marginRight: 16, marginTop: 8 }} name="fire" size={27} color="#F06795" />
-      </View>
-
-
-
-
-      <View style={styles.middle}>
-        <View style={styles.insideMiddle}>
-          <Text style={styles.txtForm}>Digite seu CPF:</Text>
-          <CustomInput value={cpf} setValue={setCpf} placeholder={"777.777.777-77"} type={"number-pad"} maxLength={11} />
-          <Text style={styles.txtForm}>Digite sua senha:</Text>
-          <CustomInput value={password} setValue={setPassword} placeholder={"******"} maxLength={11} secureTextEntry={true} />
-          <CustomButton onPress={onButtonClicked} text={"Entrar"} />
-
-        </View>
-
-
-      </View>
-
-      <Snackbar
-        visible={visible}
-        onDismiss={onDismissSnackBar}
-        action={{
-          label: 'Ok'
-        }}>
-        {messageOfSnackbar}
-      </Snackbar>
+            <FontAwesome5 style={{ marginRight: 16, marginTop: 8 }} name="fire" size={27} color="#F06795" />
+          </View>
 
 
 
 
-    </SafeAreaView>
+          <View style={styles.middle}>
+            <View style={styles.insideMiddle}>
+              <Text style={styles.txtForm}>Digite seu CPF:</Text>
+              <CustomInput value={cpf} setValue={setCpf} placeholder={"777.777.777-77"} type={"number-pad"} maxLength={11} />
+              <Text style={styles.txtForm}>Digite sua senha:</Text>
+              <CustomInput value={password} setValue={setPassword} placeholder={"******"} maxLength={11} secureTextEntry={true} />
+              <CustomButton onPress={onButtonClicked} text={"Entrar"} />
+
+            </View>
+
+
+          </View>
+
+          <Snackbar
+            visible={visible}
+            onDismiss={onDismissSnackBar}
+            action={{
+              label: 'Ok'
+            }}>
+            {messageOfSnackbar}
+          </Snackbar>
+
+
+
+
+        </SafeAreaView>
+
+        : <Text>No connection</Text>
+    }
+
   </>
 }
+
+
+
+
 
 
 const styles = StyleSheet.create({

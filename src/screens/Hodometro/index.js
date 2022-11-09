@@ -4,6 +4,7 @@ import { FontAwesome5 } from '@expo/vector-icons'
 import HodometroI from './Componentes/HodometroI';
 import HodometroF from './Componentes/HodometroF';
 import { useNavigation } from '@react-navigation/native';
+import {startJourney,finishJourney} from './Functions/index'
 
 const Hodometro = () => {
     //declarando variaveis
@@ -11,14 +12,11 @@ const Hodometro = () => {
     const navigation = useNavigation()
     const [value, setValue] = useState("")
     //declarando funcoes
-    function startJourney(){
-        navigation.navigate("Login_Screen")
-    }
 
-    function finishJourney(){
-        navigation.navigate("Feed_Screen")
-    }
+    startJourney(navigation)
+    finishJourney(navigation)
 
+  
     return <>
         <SafeAreaView style={{ backgroundColor: '#73c1ec', height: "100%" }}>
 
