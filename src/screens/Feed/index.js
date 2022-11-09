@@ -1,15 +1,15 @@
 import React from 'react';
-import { View,Text } from 'react-native';
+import { View,Text,SafeAreaView } from 'react-native';
 
 // import { Container } from './styles';
 
 const Feed = () => {
     return <>
-            <View>
+            <SafeAreaView>
                 <Text>
                     tela de feed
                 </Text>
-            </View>
+            </SafeAreaView>
     </>;
 }
 
