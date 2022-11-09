@@ -1,17 +1,46 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, SafeAreaView, useWindowDimensions } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons'
-import CustomInput from '../components/CustomInputText';
-import CustomButton from '../components/CustomBtn';
+import CustomInput from '../../components/CustomInputText';
+import CustomButton from '../../components/CustomBtn';
+import { useNavigation } from "@react-navigation/native";
+import { users } from '../../dto/users.json'
+import { Snackbar } from 'react-native-paper';
 
 const LoginScreen = () => {
 
-  const window = useWindowDimensions();
+
   const [cpf, setCpf] = useState()
   const [password, setPassword] = useState()
+  const navigation = useNavigation()
+  const [visible, setVisible] = useState(false);
+  const [messageOfSnackbar, setMessageOfSnackBar] = useState(false);
+  const onToggleSnackBar = (messageOfSnackbar) => {
+    setVisible(!visible)
+    setMessageOfSnackBar(messageOfSnackbar)
+  }
+  const onDismissSnackBar = () => setVisible(false);
+
+
   function onButtonClicked() {
+    users.forEach((user) => {
+      if (user.cpf == cpf) {
+        if (user.senha == password) {
+         navigation.navigate("Hodometro_Screen")
+        }else{
+          onToggleSnackBar("Senha incorreta")
+        }
+      }else{
+        onToggleSnackBar("CPF incorreto")
+      }
+    })
+
+
+
 
   }
+
+
 
 
   return <>
@@ -32,15 +61,24 @@ const LoginScreen = () => {
       <View style={styles.middle}>
         <View style={styles.insideMiddle}>
           <Text style={styles.txtForm}>Digite seu CPF:</Text>
-          <CustomInput value={cpf} setValue={setCpf} placeholder={"777.777.777-77"} />
+          <CustomInput value={cpf} setValue={setCpf} placeholder={"777.777.777-77"} type={"number-pad"} maxLength={11} />
           <Text style={styles.txtForm}>Digite sua senha:</Text>
-          <CustomInput value={password} setValue={setPassword} placeholder={"******"}/>
-          <CustomButton onPress={onButtonClicked} text={"Entrar"}/>
+          <CustomInput value={password} setValue={setPassword} placeholder={"******"} maxLength={11} secureTextEntry={true} />
+          <CustomButton onPress={onButtonClicked} text={"Entrar"} />
 
         </View>
 
 
       </View>
+
+      <Snackbar
+        visible={visible}
+        onDismiss={onDismissSnackBar}
+        action={{
+          label: 'Ok'
+        }}>
+        {messageOfSnackbar}
+      </Snackbar>
 
 
 
@@ -55,7 +93,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#73c1ec',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    height: "15%"
+    height: "15%",
+    marginTop: "16%"
 
   },
   innerHeader: {
