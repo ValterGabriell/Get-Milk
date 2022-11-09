@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, SafeAreaView, useWindowDimensions } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons'
-import CustomInput from '../components/CustomInputText';
-import CustomButton from '../components/CustomBtn';
+import CustomInput from '../../components/CustomInputText';
+import CustomButton from '../../components/CustomBtn';
 
 const LoginScreen = () => {
 
