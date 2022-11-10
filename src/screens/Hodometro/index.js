@@ -6,12 +6,14 @@ import HodometroF from './Componentes/HodometroF';
 import { useNavigation } from '@react-navigation/native';
 
 
+
 const Hodometro = () => {
     //declarando variaveis
     const isStaring = true
     const navigation = useNavigation()
     const [value, setValue] = useState("")
     //declarando funcoes
+
 
     function startWork(){
         navigation.navigate("Feed_Screen")
@@ -20,6 +22,7 @@ const Hodometro = () => {
     function finishWork(){
         navigation.navigate("Login_Screen")
     }
+
 
   
     return <>
@@ -36,7 +39,9 @@ const Hodometro = () => {
 
 
             {/* trecho de código que verifica se o usuario está iniciando ou finalizando a jornada de trabalho */}
+
             {isStaring ? <HodometroI onPress={()=>startWork()}/> : <HodometroF onPress={()=>{finishWork()}}/>  }
+
 
 
           
