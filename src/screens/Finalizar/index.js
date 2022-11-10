@@ -6,7 +6,7 @@ import { FontAwesome5 } from '@expo/vector-icons'
 import CustomInput from '../../components/CustomInputText';
 import CustomButton from '../../components/CustomBtn';
 import { useNavigation } from '@react-navigation/native';
-import { storeData } from '../../services/Repository/DBMethods';
+import Car from '../../services/Database/Coleta'
 
 
 
@@ -35,10 +35,14 @@ const Finalizar = () => {
     }
 
 
-    function saveColeta(amostra, volume, temperatura, compartimento, testeAlisoral) {
+    function saveColeta(amostra, volume, temperatura) {
         clickButton()
-        const coleta = { amostra: amostra, volume, temperatura, compartimento, testeAlisoral }
-        storeData("0", coleta, navigation)
+        const coleta = { brand: amostra, model:volume, hp:temperatura }
+        Car.create(coleta).then((res)=>{
+           navigation.navigate("Login_Screen")
+        }).catch((err)=>{
+            console.log(err);
+        })
     }
 
 
@@ -78,7 +82,7 @@ const Finalizar = () => {
                         }
                         {
                             !isClicked && <CustomButton onPress={() => {
-                                saveColeta("ABC12322", 835.4, 645.4, "AV2sdf", true)
+                                saveColeta("ABC12322", "835.4", 645)
                             }} text={"Finalizar"} />
                         }
                     </View>
