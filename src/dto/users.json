@@ -2,6 +2,12 @@
     "users":[
         {"cpf":123456789, "senha":123},
         {"cpf":987654321, "senha":321}
+    ],
+    "coletas":[
+        {"amostra":123456789, "volume":123, "caminhao":"a"},
+        {"amostra":123456789, "volume":123, "caminhao":"b"},
+        {"amostra":123456789, "volume":123, "caminhao":"c"},
+        {"amostra":123456789, "volume":123, "caminhao":"d"}
     ]
      
 }

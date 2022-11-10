@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Switch, ActivityIndicator, ScrollView } from 'react-native';
+import { View, StyleSheet, Switch, ActivityIndicator } from 'react-native';
 import { SafeAreaView } from 'react-native';
 import { Text } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons'
 import CustomInput from '../../components/CustomInputText';
 import CustomButton from '../../components/CustomBtn';
 import { useNavigation } from '@react-navigation/native';
+import { storeData } from '../../services/Repository/DBMethods';
 
 
 
@@ -29,22 +30,22 @@ const Finalizar = () => {
         setIsClicked(true)
     }
 
-    function cancel(){
+    function cancel() {
         navigation.navigate("Feed_Screen")
     }
 
-    function saveData() {
+
+    function saveColeta(amostra, volume, temperatura, compartimento, testeAlisoral) {
         clickButton()
-        setTimeout(() => {
-            setIsClicked(false)
-        }, 3000)
+        const coleta = { amostra: amostra, volume, temperatura, compartimento, testeAlisoral }
+        storeData("0", coleta, navigation)
     }
 
 
     return <>
 
         <SafeAreaView style={styles.root}>
-            
+
             <View style={styles.container}>
 
                 <View style={styles.insideContainer}>
@@ -52,7 +53,7 @@ const Finalizar = () => {
                     <View style={styles.insideOfInsideContainer}>
                         <Text style={styles.txtColeta}>Coleta: </Text>
                         <Text style={styles.txtNumeroColeta}>3d85r4</Text>
-                        <FontAwesome5 style={{ alignSelf: "center", marginLeft: "45%" }} name="times" size={32} color="#252525" onPress={()=>cancel()}/>
+                        <FontAwesome5 style={{ alignSelf: "center", marginLeft: "45%" }} name="times" size={32} color="#252525" onPress={() => cancel()} />
                     </View>
                     <Text style={styles.txtFazenda}>Fazenda Leite Puro</Text>
 
@@ -76,7 +77,9 @@ const Finalizar = () => {
                             isClicked && <ActivityIndicator size="large" color="#73c1ec" />
                         }
                         {
-                            !isClicked && <CustomButton onPress={saveData} text={"Finalizar"} />
+                            !isClicked && <CustomButton onPress={() => {
+                                saveColeta("ABC12322", 835.4, 645.4, "AV2sdf", true)
+                            }} text={"Finalizar"} />
                         }
                     </View>
                 </View>

@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, SafeAreaView } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons'
 import CustomInput from '../../components/CustomInputText';
@@ -9,7 +9,9 @@ import { users } from '../../dto/users.json'
 import { Snackbar } from 'react-native-paper';
 import { checkConnected } from '../../services/Handle/NetworkConnection';
 
+
 const LoginScreen = () => {
+
 
   const [connected, setConnected] = useState(false)
 
@@ -24,6 +26,11 @@ const LoginScreen = () => {
     setMessageOfSnackBar(messageOfSnackbar)
   }
   const onDismissSnackBar = () => setVisible(false);
+
+
+  useEffect(() => {
+
+  }, [])
 
 
   function onButtonClicked() {
