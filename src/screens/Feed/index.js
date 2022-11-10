@@ -3,32 +3,31 @@ import { View, Text, StyleSheet, SafeAreaView } from "react-native";
 
 import Calendar from "../Feed/Data";
 
-const FeedScreen = () => {
-  return (
-    <>
-      <SafeAreaView style={{ backgroundColor: "#F1F1F1", height: "100%" }}>
-        <View style={styles.header}>
-          <View style={styles.innerHeader}>
-            <Text style={styles.txtCollect}>Coletas</Text>
-            <Text style={styles.txtDay}>{weekFormat}</Text>
-          </View>
-          <View style={styles.calendar}>
-            <Calendar></Calendar>
-          </View>
 
+// import { Container } from './styles';
+
+const FeedScreen = () => {
+  return <>
+    <SafeAreaView style={{ backgroundColor: "#F1F1F1", height: "100%" }}>
+      <View style={styles.header}>
+        <View style={styles.innerHeader}>
+          <Text style={styles.txtCollect}>Coletas</Text>
+          <Text style={styles.txtDay}>{weekFormat}</Text>
         </View>
+        <View style={styles.calendar}>
+          <Calendar></Calendar>
+        </View>
+
       </View>
     </SafeAreaView>
-  </>
+
+    
+  
+  </>;
 }
 
-        <View style={styles.middle}>
-          <View style={styles.insideMiddle}></View>
-        </View>
-      </SafeAreaView>
-    </>
-  );
-};
+
+
 
 const styles = StyleSheet.create({
   header: {
