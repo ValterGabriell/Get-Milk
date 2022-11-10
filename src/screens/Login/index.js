@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, SafeAreaView } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons'
@@ -11,6 +12,7 @@ import { checkConnected } from '../../services/Handle/NetworkConnection';
 const LoginScreen = () => {
 
   const [connected, setConnected] = useState(false)
+
 
   const [cpf, setCpf] = useState("987654321")
   const [password, setPassword] = useState("321")
@@ -69,6 +71,7 @@ const LoginScreen = () => {
               <Text style={styles.txtForm}>Digite sua senha:</Text>
               <CustomInput value={password} setValue={setPassword} placeholder={"******"} maxLength={11} secureTextEntry={true} />
               <CustomButton onPress={onButtonClicked} text={"Entrar"} />
+
             </View>
 
 
@@ -93,9 +96,6 @@ const LoginScreen = () => {
 
   </>
 }
-
-
-
 
 
 

@@ -1,7 +1,10 @@
+
 import React, { useState } from "react";
 import { View, Text, StyleSheet, SafeAreaView } from "react-native";
 
+
 import Calendar from "../Feed/datepicker";
+
 
 const LoginScreen = () => {
   return (
@@ -16,14 +19,6 @@ const LoginScreen = () => {
             <Text style={styles.txtCalendar}>09/11</Text>
           </View>
         </View>
-
-        <View style={styles.middle}>
-          <View style={styles.insideMiddle}></View>
-        </View>
-      </SafeAreaView>
-    </>
-  );
-};
 
 const styles = StyleSheet.create({
   header: {
