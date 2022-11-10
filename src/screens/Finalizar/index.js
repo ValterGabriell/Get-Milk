@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Switch, ActivityIndicator } from 'react-native';
+import { View, StyleSheet, Switch, ActivityIndicator, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native';
 import { Text } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons'
 import CustomInput from '../../components/CustomInputText';
 import CustomButton from '../../components/CustomBtn';
 import { useNavigation } from '@react-navigation/native';
+
 
 
 const Finalizar = () => {
@@ -28,10 +29,14 @@ const Finalizar = () => {
         setIsClicked(true)
     }
 
+    function cancel(){
+        navigation.navigate("Feed_Screen")
+    }
+
     function saveData() {
         clickButton()
         setTimeout(() => {
-            navigation.navigate("Feed_Screen")
+            setIsClicked(false)
         }, 3000)
     }
 
@@ -39,12 +44,15 @@ const Finalizar = () => {
     return <>
 
         <SafeAreaView style={styles.root}>
+            
             <View style={styles.container}>
+
                 <View style={styles.insideContainer}>
+
                     <View style={styles.insideOfInsideContainer}>
                         <Text style={styles.txtColeta}>Coleta: </Text>
                         <Text style={styles.txtNumeroColeta}>3d85r4</Text>
-                        <FontAwesome5 style={{ alignSelf: "center", marginLeft: "45%" }} name="times" size={32} color="#252525" />
+                        <FontAwesome5 style={{ alignSelf: "center", marginLeft: "45%" }} name="times" size={32} color="#252525" onPress={()=>cancel()}/>
                     </View>
                     <Text style={styles.txtFazenda}>Fazenda Leite Puro</Text>
 
@@ -63,18 +71,17 @@ const Finalizar = () => {
                         style={{ alignSelf: "center" }}
                     />
 
-
-                    <CustomButton onPress={saveData} text={"Finalizar"} />
-
-                    {/*trecho pra aparecer o simbolo de carregando*/}
-                    {
-                        isClicked && <ActivityIndicator size="large" color="#73c1ec" />
-                    }
-
-
+                    <View style={{ flexDirection: "row", alignSelf: "center" }}>
+                        {
+                            isClicked && <ActivityIndicator size="large" color="#73c1ec" />
+                        }
+                        {
+                            !isClicked && <CustomButton onPress={saveData} text={"Finalizar"} />
+                        }
+                    </View>
                 </View>
-
             </View>
+
         </SafeAreaView>
 
 
