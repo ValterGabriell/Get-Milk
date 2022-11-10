@@ -106,7 +106,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     height: "15%",
     marginTop: "16%"
-
   },
   innerHeader: {
     marginLeft: 16,

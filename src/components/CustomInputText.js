@@ -24,7 +24,7 @@ const estilos = StyleSheet.create({
         marginLeft:"4%",
         marginBottom:"2%",
         height: "15%",
-        padding: 16,
+        padding: 4,
         fontWeight: '500',
     },
 
