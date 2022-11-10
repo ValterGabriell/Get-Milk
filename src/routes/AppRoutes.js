@@ -18,10 +18,10 @@ const AppRoutes = () => {
           headerShown: false,
         }}
       >
-        <Stack.Screen name="Login_Screen" component={FinalizarScreen} />
+        <Stack.Screen name="Login_Screen" component={LoginScreen} />
         <Stack.Screen name='Hodometro_Screen' component={HodometroScreen} />
         <Stack.Screen name='Feed_Screen' component={FeedScreen} />
-        <Stack.Screen name='Feed_ScFreen' component={FinalizarScreen} />
+        <Stack.Screen name='Finalizar_Screen' component={FinalizarScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

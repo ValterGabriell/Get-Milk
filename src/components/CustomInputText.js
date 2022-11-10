@@ -23,7 +23,7 @@ const estilos = StyleSheet.create({
         width: "90%",
         marginLeft:"4%",
         marginBottom:"2%",
-        height: "15%",
+        height: "18%",
         padding: 4,
         fontWeight: '500',
     },
