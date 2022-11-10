@@ -1,3 +1,4 @@
+
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
@@ -6,6 +7,8 @@ import HodometroScreen from '../screens/Hodometro/index';
 import FeedScreen from '../screens/Feed/index'
 const Stack = createNativeStackNavigator()
 
+
+const Stack = createNativeStackNavigator();
 
 const AppRoutes = () => {
   return (
@@ -16,7 +19,7 @@ const AppRoutes = () => {
              <Stack.Screen name='Feed_Screen' component={FeedScreen}/>
         </Stack.Navigator>
     </NavigationContainer>
-  )
-}
+  );
+};
 
 export default AppRoutes;

@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, SafeAreaView } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons'
@@ -102,6 +103,7 @@ const LoginScreen = () => {
 
 
 
+
 const styles = StyleSheet.create({
   header: {
     backgroundColor: '#73c1ec',
@@ -109,41 +111,37 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     height: "15%",
     marginTop: "16%"
-
   },
   innerHeader: {
     marginLeft: 16,
-    marginTop: 8
-
+    marginTop: 8,
   },
   txtWelcome: {
     color: "#FFF",
     fontWeight: "bold",
-    fontSize: 18
+    fontSize: 18,
   },
   txtSignIn: {
-    color: "#FFF"
+    color: "#FFF",
   },
   insideMiddle: {
     backgroundColor: "#CCC",
     marginLeft: "8%",
     marginRight: "8%",
     marginTop: "16%",
-    borderRadius: 8
+    borderRadius: 8,
   },
   middle: {
     backgroundColor: "#FFF",
     borderTopRightRadius: 32,
     borderTopLeftRadius: 32,
-    height: "100%"
+    height: "100%",
   },
   txtForm: {
     marginLeft: "4%",
     marginTop: "4%",
-    marginBottom: "2%"
-  }
-
+    marginBottom: "2%",
+  },
 });
 
 export default LoginScreen;
-
