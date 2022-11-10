@@ -12,8 +12,8 @@ const LoginScreen = () => {
 
   const [connected, setConnected] = useState(false)
 
-  const [cpf, setCpf] = useState()
-  const [password, setPassword] = useState()
+  const [cpf, setCpf] = useState("987654321")
+  const [password, setPassword] = useState("321")
   const navigation = useNavigation()
   const [visible, setVisible] = useState(false);
   const [messageOfSnackbar, setMessageOfSnackBar] = useState(false);
@@ -62,8 +62,6 @@ const LoginScreen = () => {
           </View>
 
 
-
-
           <View style={styles.middle}>
             <View style={styles.insideMiddle}>
               <Text style={styles.txtForm}>Digite seu CPF:</Text>
@@ -71,7 +69,6 @@ const LoginScreen = () => {
               <Text style={styles.txtForm}>Digite sua senha:</Text>
               <CustomInput value={password} setValue={setPassword} placeholder={"******"} maxLength={11} secureTextEntry={true} />
               <CustomButton onPress={onButtonClicked} text={"Entrar"} />
-
             </View>
 
 
@@ -113,37 +110,34 @@ const styles = StyleSheet.create({
   },
   innerHeader: {
     marginLeft: 16,
-    marginTop: 8
-
+    marginTop: 8,
   },
   txtWelcome: {
     color: "#FFF",
     fontWeight: "bold",
-    fontSize: 18
+    fontSize: 18,
   },
   txtSignIn: {
-    color: "#FFF"
+    color: "#FFF",
   },
   insideMiddle: {
     backgroundColor: "#CCC",
     marginLeft: "8%",
     marginRight: "8%",
     marginTop: "16%",
-    borderRadius: 8
+    borderRadius: 8,
   },
   middle: {
     backgroundColor: "#FFF",
     borderTopRightRadius: 32,
     borderTopLeftRadius: 32,
-    height: "100%"
+    height: "100%",
   },
   txtForm: {
     marginLeft: "4%",
     marginTop: "4%",
-    marginBottom: "2%"
-  }
-
+    marginBottom: "2%",
+  },
 });
 
 export default LoginScreen;
-
