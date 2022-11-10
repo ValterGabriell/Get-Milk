@@ -17,8 +17,8 @@ const AppRoutes = () => {
           headerShown: false,
         }}
       >
-        <Stack.Screen name="Login_Screen" options={{headerShown:false}} component={FinalizarScreen} />
-             <Stack.Screen name='Hodometro_Screen'  options={{headerShown:false}}  component={HodometroScreen}/>
+        <Stack.Screen name="Login_Screen"  component={FinalizarScreen} />
+             <Stack.Screen name='Hodometro_Screen'   component={HodometroScreen}/>
              <Stack.Screen name='Feed_Screen' component={FeedScreen}/>
       </Stack.Navigator>
     </NavigationContainer>
