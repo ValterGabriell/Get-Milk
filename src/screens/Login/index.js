@@ -13,8 +13,9 @@ const LoginScreen = () => {
 
   const [connected, setConnected] = useState(false)
 
-  const [cpf, setCpf] = useState()
-  const [password, setPassword] = useState()
+
+  const [cpf, setCpf] = useState("987654321")
+  const [password, setPassword] = useState("321")
   const navigation = useNavigation()
   const [visible, setVisible] = useState(false);
   const [messageOfSnackbar, setMessageOfSnackBar] = useState(false);
@@ -63,8 +64,6 @@ const LoginScreen = () => {
           </View>
 
 
-
-
           <View style={styles.middle}>
             <View style={styles.insideMiddle}>
               <Text style={styles.txtForm}>Digite seu CPF:</Text>
@@ -100,10 +99,6 @@ const LoginScreen = () => {
 
 
 
-
-
-
-
 const styles = StyleSheet.create({
   header: {
     backgroundColor: '#73c1ec',
@@ -111,6 +106,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     height: "15%",
     marginTop: "16%"
+
   },
   innerHeader: {
     marginLeft: 16,

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, SafeAreaView } from "react-native";
+
 import Calendar from "../Feed/Data";
 
 const FeedScreen = () => {
@@ -14,7 +15,12 @@ const FeedScreen = () => {
           <View style={styles.calendar}>
             <Calendar></Calendar>
           </View>
+
         </View>
+      </View>
+    </SafeAreaView>
+  </>
+}
 
         <View style={styles.middle}>
           <View style={styles.insideMiddle}></View>
@@ -96,3 +102,4 @@ const weekDay = String(data.getDay());
 const weekFormat = Dayweek[data.getDay()];
 
 export default FeedScreen;
+
