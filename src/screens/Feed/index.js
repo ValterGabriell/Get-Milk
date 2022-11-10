@@ -1,19 +1,20 @@
 
 import React, { useState } from "react";
 import { View, Text, StyleSheet, SafeAreaView } from "react-native";
-
+import { useNavigation } from "@react-navigation/native";
 
 import Calendar from "../Feed/datepicker";
 import CustomButton from "../../components/CustomBtn";
 
 
 const LoginScreen = () => {
+  const navigation = useNavigation()
   return <>
 
     <SafeAreaView style={{ backgroundColor: "#F1F1F1", height: "100%" }}>
       <View style={styles.header}>
         <View style={styles.innerHeader}>
-          <Text style={styles.txtCollect}>Coletas</Text>
+          <Text style={styles.txtCollect} onPress={()=>{navigation.navigate("Finalizar_Screen")}}>Coletas</Text>
           <Text style={styles.txtDay}>Sábado</Text>
         </View>
         <View style={styles.calendar}>

@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
     },
     insideContainer: {
         padding: 16,
-        height: "75%"
+        height: "60%"
     },
     insideOfInsideContainer: {
         flexDirection: 'row'
