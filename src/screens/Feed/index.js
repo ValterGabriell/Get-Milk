@@ -1,19 +1,18 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, SafeAreaView } from "react-native";
+import Calendar from "../Feed/Data";
 
-import Calendar from "../Feed/datepicker";
-
-const LoginScreen = () => {
+const FeedScreen = () => {
   return (
     <>
       <SafeAreaView style={{ backgroundColor: "#F1F1F1", height: "100%" }}>
         <View style={styles.header}>
           <View style={styles.innerHeader}>
             <Text style={styles.txtCollect}>Coletas</Text>
-            <Text style={styles.txtDay}>Sábado</Text>
+            <Text style={styles.txtDay}>{weekFormat}</Text>
           </View>
           <View style={styles.calendar}>
-            <Text style={styles.txtCalendar}>09/11</Text>
+            <Calendar></Calendar>
           </View>
         </View>
 
@@ -46,7 +45,7 @@ const styles = StyleSheet.create({
     align: "center",
     marginLeft: 15,
     marginRight: 15,
-    marginTop: -15,
+    marginTop: -10,
     borderRadius: 30,
   },
   txtCollect: {
@@ -60,6 +59,7 @@ const styles = StyleSheet.create({
   },
   txtDay: {
     color: "black",
+    fontSize: 24,
   },
   insideMiddle: {
     backgroundColor: "#CCC",
@@ -81,4 +81,18 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LoginScreen;
+const data = new Date();
+const Dayweek = [
+  "Domingo",
+  "Seunda-Feira",
+  "Terça-Feira",
+  "Quarta-Feira",
+  "Quinta-Feira",
+  "Sexta-Feira",
+  "Sábado",
+];
+
+const weekDay = String(data.getDay());
+const weekFormat = Dayweek[data.getDay()];
+
+export default FeedScreen;
