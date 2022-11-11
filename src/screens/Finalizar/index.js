@@ -59,7 +59,8 @@ const Finalizar = () => {
                         <Text style={styles.txtNumeroColeta}>3d85r4</Text>
                         <FontAwesome5 style={{ alignSelf: "center", marginLeft: "45%" }} name="times" size={32} color="#252525" onPress={() => cancel()} />
                     </View>
-                    <Text style={styles.txtFazenda}>Fazenda Leite Puro</Text>
+                    <Text style={[styles.txtFazenda, styles.txtDono ]}>Fazenda Leite Puro</Text>
+                    <Text style={styles.txtFazenda}>Dono: João</Text>
 
                     <CustomInput placeholder={"Número da Amostra Ex. ABC123"} />
                     <CustomInput placeholder={"Volume Litro Ex. 87,5"} type={"number-pad"} />
@@ -122,7 +123,7 @@ const styles = StyleSheet.create({
     },
     txtFazenda: {
         marginTop: "2%",
-        marginBottom: "16%",
+        marginBottom: "2%",
         marginLeft: "4%",
         color: "#252525",
         fontSize: 16
@@ -131,6 +132,10 @@ const styles = StyleSheet.create({
         marginTop: "2%",
         color: "#252525",
         fontSize: 16
+    },
+    txtDono:{
+        fontWeight:"bold",
+        color:"#252525"
     }
 });
 
