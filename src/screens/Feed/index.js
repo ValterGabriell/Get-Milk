@@ -1,6 +1,15 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, SafeAreaView } from "react-native";
+import {
+  View,
+  Text,
+  FlatList,
+  StyleSheet,
+  SafeAreaView,
+  TouchableOpacity,
+} from "react-native";
 import Calendar from "../Feed/Data";
+import UserTest from "../../dto/userTest";
+import { Button } from "react-native-paper";
 
 const FeedScreen = () => {
   return (
@@ -17,6 +26,7 @@ const FeedScreen = () => {
         </View>
 
         <View style={styles.middle}>
+          <UserTest></UserTest>
           <View style={styles.insideMiddle}></View>
         </View>
       </SafeAreaView>

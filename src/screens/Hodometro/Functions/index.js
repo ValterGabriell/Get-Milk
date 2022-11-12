@@ -1,7 +1,10 @@
-export function startJourney({navigation}){
-    navigation.navigate("Login_Screen")
-} 
+import React from "react";
+import { ReactNavigation } from "@react-navigation/native";
 
-export function finishJourney({navigation}){
-    navigation.navigate("Feed_Screen")
+export function startWork({ navigation }) {
+  navigation.navigate("Login_Screen");
+}
+
+export function finishWork({ navigation }) {
+  navigation.navigate("Feed_Screen");
 }
