@@ -34,6 +34,7 @@ const FeedScreen = () => {
   );
 };
 
+
 const styles = StyleSheet.create({
   header: {
     backgroundColor: "#F1F1F1",
