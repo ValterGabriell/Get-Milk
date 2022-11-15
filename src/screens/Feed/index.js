@@ -1,32 +1,38 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, SafeAreaView } from "react-native";
-
+import {
+  View,
+  Text,
+  FlatList,
+  StyleSheet,
+  SafeAreaView,
+  TouchableOpacity,
+} from "react-native";
 import Calendar from "../Feed/Data";
-
-
-// import { Container } from './styles';
+import UserTest from "../../dto/userTest";
+import { Button } from "react-native-paper";
 
 const FeedScreen = () => {
-  return <>
-    <SafeAreaView style={{ backgroundColor: "#F1F1F1", height: "100%" }}>
-      <View style={styles.header}>
-        <View style={styles.innerHeader}>
-          <Text style={styles.txtCollect}>Coletas</Text>
-          <Text style={styles.txtDay}>{weekFormat}</Text>
+  return (
+    <>
+      <SafeAreaView style={{ backgroundColor: "#F1F1F1", height: "100%" }}>
+        <View style={styles.header}>
+          <View style={styles.innerHeader}>
+            <Text style={styles.txtCollect}>Coletas</Text>
+            <Text style={styles.txtDay}>{weekFormat}</Text>
+          </View>
+          <View style={styles.calendar}>
+            <Calendar></Calendar>
+          </View>
         </View>
-        <View style={styles.calendar}>
-          <Calendar></Calendar>
+
+        <View style={styles.middle}>
+          <UserTest></UserTest>
+          <View style={styles.insideMiddle}></View>
         </View>
-
-      </View>
-    </SafeAreaView>
-
-    
-  
-  </>;
-}
-
-
+      </SafeAreaView>
+    </>
+  );
+};
 
 
 const styles = StyleSheet.create({
@@ -101,4 +107,3 @@ const weekDay = String(data.getDay());
 const weekFormat = Dayweek[data.getDay()];
 
 export default FeedScreen;
-
