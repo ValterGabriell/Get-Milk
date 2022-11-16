@@ -2,6 +2,13 @@
     "users":[
         {"cpf":123456789, "senha":123},
         {"cpf":987654321, "senha":321}
+    ],
+    "coletas":[
+        {"id":1, "title":"a"},
+        {"id":2, "title":"b"},
+        {"id":3, "title":"c"},
+        {"id":4, "title":"d"}
+       
     ]
      
 }

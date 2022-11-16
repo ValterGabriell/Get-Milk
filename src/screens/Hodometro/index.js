@@ -4,17 +4,25 @@ import { FontAwesome5 } from '@expo/vector-icons'
 import HodometroI from './Componentes/HodometroI';
 import HodometroF from './Componentes/HodometroF';
 import { useNavigation } from '@react-navigation/native';
-import {startJourney,finishJourney} from './Functions/index'
+
+
 
 const Hodometro = () => {
     //declarando variaveis
-    const isStaring = false
+    const isStaring = true
     const navigation = useNavigation()
     const [value, setValue] = useState("")
     //declarando funcoes
 
-    startJourney(navigation)
-    finishJourney(navigation)
+
+    function startWork(){
+        navigation.navigate("Feed_Screen")
+    }
+
+    function finishWork(){
+        navigation.navigate("Login_Screen")
+    }
+
 
   
     return <>
@@ -22,7 +30,7 @@ const Hodometro = () => {
 
             <View style={styles.header}>
                 <View style={styles.innerHeader}>
-                    <Text style={styles.txtHodometro}>Defina seu hodometro!</Text>
+                    <Text style={styles.txtHodometro}>Olá, motorista!</Text>
                     <Text style={styles.txtSignIn}>Bom trabalho!</Text>
                 </View>
 
@@ -31,7 +39,9 @@ const Hodometro = () => {
 
 
             {/* trecho de código que verifica se o usuario está iniciando ou finalizando a jornada de trabalho */}
-            {isStaring ? <HodometroI onPress={()=>startJourney()}/> : <HodometroF onPress={()=>{finishJourney()}}/>  }
+
+            {isStaring ? <HodometroI onPress={()=>startWork()}/> : <HodometroF onPress={()=>{finishWork()}}/>  }
+
 
 
           

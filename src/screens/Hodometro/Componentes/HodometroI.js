@@ -30,8 +30,11 @@ const HodometroI = ({ onPress }) => {
     return <>
         <SafeAreaView style={styles.middle}>
             <View style={styles.insideMiddle}>
+                <Text style={styles.txtItems}>Data: 22/05 - 05:00</Text>
+                <Text style={styles.txtItems}>Último login: 21/05 - 18:00</Text>
+                <Text style={styles.txtItems}>Carro: HNI-8569</Text>
                 <Text style={styles.txtForm}>Hodometro Inicial:</Text>
-                <CustomInput value={value} setValue={setValue} placeholder={"00000000"} type={"number-pad"} />
+                <CustomInput value={value} setValue={setValue} placeholder={"00000000"} type={"number-pad"} />             
                 <CustomButton onPress={isEmpty} text={"Iniciar Jornada!"} />
             </View>
 
@@ -73,6 +76,13 @@ const styles = StyleSheet.create({
         marginLeft: "4%",
         marginTop: "4%",
         marginBottom: "2%"
+    },
+    txtItems:{
+        marginLeft: "4%",
+        marginTop: "4%",
+        marginBottom: "2%",
+        fontWeight:"bold",
+        color:"#252525"
     }
 
 });
