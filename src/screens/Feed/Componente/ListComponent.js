@@ -8,34 +8,31 @@ import {
   StatusBar,
   TouchableOpacity,
 } from "react-native";
+import {users} from '../../../dto/users.json'
+import { useNavigation } from "@react-navigation/native";
 
-const DATA = [
-  {
-    id: "01",
-    title: "Café",
-  },
-  {
-    id: "02",
-    title: "Banana",
-  },
-  {
-    id: "03",
-    title: "Pão",
-  },
-];
 
-const Item = ({ title }) => (
+const DATA = [{
+  "id":1,
+  "title":"asdasd"
+}]
+
+const Item = ({ title, navigation }) => (
   <View style={styles.item}>
     <Text style={styles.title}>{title}</Text>
-    <TouchableOpacity style={styles.containerButton}>
+    <TouchableOpacity style={styles.containerButton} onPress={()=>{
+      navigation.navigate("Finalizar_Screen",{
+        title:title
+      })}}>
       <Text style={styles.button}>Coletar</Text>
     </TouchableOpacity>
   </View>
 );
 
 const App = () => {
-  const renderItem = ({ item }) => <Item title={item.title} />;
-
+  const navigation = useNavigation()
+  const renderItem = ({ item }) => <Item title={item.title} navigation={navigation} />;
+  
   return (
     <SafeAreaView style={styles.container}>
       <FlatList

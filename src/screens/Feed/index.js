@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import Calendar from "../Feed/Data";
-import UserTest from "../../dto/userTest";
+import ListComponent from "./Componente/ListComponent";
 import { Button } from "react-native-paper";
 
 const FeedScreen = () => {
@@ -26,7 +26,7 @@ const FeedScreen = () => {
         </View>
 
         <View style={styles.middle}>
-          <UserTest></UserTest>
+          <ListComponent></ListComponent>
           <View style={styles.insideMiddle}></View>
         </View>
       </SafeAreaView>

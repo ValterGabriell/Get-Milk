@@ -4,10 +4,11 @@
         {"cpf":987654321, "senha":321}
     ],
     "coletas":[
-        {"amostra":123456789, "volume":123, "caminhao":"a"},
-        {"amostra":123456789, "volume":123, "caminhao":"b"},
-        {"amostra":123456789, "volume":123, "caminhao":"c"},
-        {"amostra":123456789, "volume":123, "caminhao":"d"}
+        {"id":1, "title":"a"},
+        {"id":2, "title":"b"},
+        {"id":3, "title":"c"},
+        {"id":4, "title":"d"}
+       
     ]
      
 }
