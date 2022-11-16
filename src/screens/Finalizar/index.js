@@ -7,15 +7,16 @@ import CustomInput from '../../components/CustomInputText';
 import CustomButton from '../../components/CustomBtn';
 import { useNavigation } from '@react-navigation/native';
 import Car from '../../services/Database/Coleta'
+import { checkConnected } from '../../services/Handle/NetworkConnection';
 
 
-
-const Finalizar = () => {
+const Finalizar = (props) => {
 
     const navigation = useNavigation()
     const [isEnabled, setIsEnabled] = useState(false);
     const [isPositive, setIsPostive] = useState("");
     const [isClicked, setIsClicked] = useState(false);
+    const title = props.route.params.title
 
     const toggleSwitch = () => {
         setIsEnabled(previousState => !previousState)
@@ -59,7 +60,7 @@ const Finalizar = () => {
                         <Text style={styles.txtNumeroColeta}>3d85r4</Text>
                         <FontAwesome5 style={{ alignSelf: "center", marginLeft: "45%" }} name="times" size={32} color="#252525" onPress={() => cancel()} />
                     </View>
-                    <Text style={[styles.txtFazenda, styles.txtDono ]}>Fazenda Leite Puro</Text>
+                    <Text style={[styles.txtFazenda, styles.txtDono ]}>{title}</Text>
                     <Text style={styles.txtFazenda}>Dono: João</Text>
 
                     <CustomInput placeholder={"Número da Amostra Ex. ABC123"} />

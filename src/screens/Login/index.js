@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, SafeAreaView } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons'
 import CustomInput from '../../components/CustomInputText';
@@ -13,9 +13,6 @@ import { checkConnected } from '../../services/Handle/NetworkConnection';
 const LoginScreen = () => {
 
 
-  const [connected, setConnected] = useState(false)
-
-
   const [cpf, setCpf] = useState("987654321")
   const [password, setPassword] = useState("321")
   const navigation = useNavigation()
@@ -26,11 +23,6 @@ const LoginScreen = () => {
     setMessageOfSnackBar(messageOfSnackbar)
   }
   const onDismissSnackBar = () => setVisible(false);
-
-
-  useEffect(() => {
-
-  }, [])
 
 
   function onButtonClicked() {
@@ -47,9 +39,6 @@ const LoginScreen = () => {
     })
   }
 
-  checkConnected().then((res) => {
-    setConnected(res)
-  })
 
 
 
@@ -57,49 +46,50 @@ const LoginScreen = () => {
 
 
   return <>
-    {
-      connected ?
-        <SafeAreaView SafeAreaView style={{ backgroundColor: '#73c1ec', height: "100%" }}>
-
-          <View style={styles.header}>
-            <View style={styles.innerHeader}>
-              <Text style={styles.txtWelcome}>Olá, seja bem vindo!</Text>
-              <Text style={styles.txtSignIn}>Entre na sua conta!</Text>
-            </View>
-
-            <FontAwesome5 style={{ marginRight: 16, marginTop: 8 }} name="fire" size={27} color="#F06795" />
-          </View>
 
 
-          <View style={styles.middle}>
-            <View style={styles.insideMiddle}>
-              <Text style={styles.txtForm}>Digite seu CPF:</Text>
-              <CustomInput value={cpf} setValue={setCpf} placeholder={"777.777.777-77"} type={"number-pad"} maxLength={11} />
-              <Text style={styles.txtForm}>Digite sua senha:</Text>
-              <CustomInput value={password} setValue={setPassword} placeholder={"******"} maxLength={11} secureTextEntry={true} />
-              <CustomButton onPress={onButtonClicked} text={"Entrar"} />
+    <SafeAreaView SafeAreaView style={{ backgroundColor: '#73c1ec', height: "100%" }}>
 
-            </View>
+      <View style={styles.header}>
+        <View style={styles.innerHeader}>
+          <Text style={styles.txtWelcome}>Olá, seja bem vindo!</Text>
+          <Text style={styles.txtSignIn}>Entre na sua conta!</Text>
+        </View>
 
-
-          </View>
-
-          <Snackbar
-            visible={visible}
-            onDismiss={onDismissSnackBar}
-            action={{
-              label: 'Ok'
-            }}>
-            {messageOfSnackbar}
-          </Snackbar>
+        <FontAwesome5 style={{ marginRight: 16, marginTop: 8 }} name="fire" size={27} color="#F06795" />
+      </View>
 
 
+      <View style={styles.middle}>
+        <View style={styles.insideMiddle}>
+          <Text style={styles.txtForm}>Digite seu CPF:</Text>
+          <CustomInput value={cpf} setValue={setCpf} placeholder={"777.777.777-77"} type={"number-pad"} maxLength={11} />
+          <Text style={styles.txtForm}>Digite sua senha:</Text>
+          <CustomInput value={password} setValue={setPassword} placeholder={"******"} maxLength={11} secureTextEntry={true} />
+          <CustomButton onPress={onButtonClicked} text={"Entrar"} />
+          <Text style={{ marginLeft: "4%" }} onPress={() => {
+            /** trocar a rota de navegacao para trocar de tela */
+             navigation.navigate("Hodometro_Screen")
+          }}>Esqueceu a senha?</Text>
+
+        </View>
 
 
-        </SafeAreaView>
+      </View>
 
-        : <Text>No connection</Text>
-    }
+      <Snackbar
+        visible={visible}
+        onDismiss={onDismissSnackBar}
+        action={{
+          label: 'Ok'
+        }}>
+        {messageOfSnackbar}
+      </Snackbar>
+
+
+
+
+    </SafeAreaView>
 
   </>
 }
@@ -116,8 +106,8 @@ const styles = StyleSheet.create({
 
   },
   innerHeader: {
-    marginLeft: 16,
-    marginTop: 8,
+    marginLeft: "4%",
+    marginTop: "1%",
   },
   txtWelcome: {
     color: "#FFF",
