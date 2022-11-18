@@ -13,7 +13,7 @@ const AppRoutes = () => {
         <Stack.Screen
           name="Login_Screen"
           options={{ headerShown: false }}
-          component={FeedScreen}
+          component={LoginScreen}
         />
         <Stack.Screen
           name="Hodometro_Screen"
