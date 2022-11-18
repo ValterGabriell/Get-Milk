@@ -74,6 +74,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   button: {
+    color: "white",
     fontSize: 18,
   },
 });
