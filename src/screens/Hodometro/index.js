@@ -7,6 +7,7 @@ import { useNavigation } from '@react-navigation/native';
 
 
 
+
 const Hodometro = () => {
     //declarando variaveis
     const isStaring = true
