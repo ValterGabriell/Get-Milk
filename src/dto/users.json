@@ -4,10 +4,10 @@
         {"cpf":987654321, "senha":321}
     ],
     "coletas":[
-        {"id":1, "title":"a"},
-        {"id":2, "title":"b"},
-        {"id":3, "title":"c"},
-        {"id":4, "title":"d"}
+        {"id":124356345634534, "numAmostra":"a","volumeLitro":824.4, "tempTanque":85.45, "compartimentoCaminhao":"abc", "testeAlisoral":0, "finalizada":false},
+        {"id":223524532456342, "numAmostra":"b","volumeLitro":14.4, "tempTanque":85.45, "compartimentoCaminhao":"abc", "testeAlisoral":0, "finalizada":false},
+        {"id":234234234234523453, "numAmostra":"c","volumeLitro":824.4, "tempTanque":85.45, "compartimentoCaminhao":"abc", "testeAlisoral":0, "finalizada":false},
+        {"id":234245231234344, "numAmostra":"d","volumeLitro":834.4, "tempTanque":85.45, "compartimentoCaminhao":"abc", "testeAlisoral":0, "finalizada":false}
        
     ]
      
