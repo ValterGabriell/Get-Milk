@@ -187,7 +187,7 @@ const removeAll = () => {
       //comando SQL modificável
       tx.executeSql(
         "DELETE * FROM minhascoleta;",
-        [id],
+        
         //-----------------------
         (_, { rowsAffected }) => {
           resolve(rowsAffected);

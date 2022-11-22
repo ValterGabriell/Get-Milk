@@ -18,6 +18,7 @@ const FeedScreen = (props) => {
   function reloadCalls() {
     var listAux = []
     Coleta.all().then((list) => {
+   
       list.forEach((el) => {
         if (el.finalizada == true) {
           listAux.push(el)
@@ -65,7 +66,18 @@ const FeedScreen = (props) => {
           <View style={styles.middle}>
             <View style={styles.insideMiddle}></View>
             <CustomButton text={"Finalizar dia"} onPress={()=>{
-               
+              setTimeout(()=>{
+                  Coleta.all().then((list)=>{
+                    list.forEach((el)=>{
+                      Coleta.remove(el.id).then((res)=>{
+                        console.log(res);
+                      }).catch((err)=>{
+                          console.log("err" + err.message);
+                      })
+                    })
+                  })
+                
+              }, 2000)
                
             }}/>
             
