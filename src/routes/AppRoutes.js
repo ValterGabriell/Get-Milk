@@ -4,6 +4,8 @@ import React from "react";
 import LoginScreen from "../screens/Login/index";
 import HodometroScreen from "../screens/Hodometro/index";
 import FeedScreen from "../screens/Feed/index";
+import FinalizarScreen from "../screens/Finalizar/index";
+
 const Stack = createNativeStackNavigator();
 
 const AppRoutes = () => {
@@ -13,7 +15,7 @@ const AppRoutes = () => {
         <Stack.Screen
           name="Login_Screen"
           options={{ headerShown: false }}
-          component={LoginScreen}
+          component={FeedScreen}
         />
         <Stack.Screen
           name="Hodometro_Screen"

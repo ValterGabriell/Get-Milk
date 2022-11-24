@@ -30,7 +30,7 @@ const Hodometro = () => {
 
             <View style={styles.header}>
                 <View style={styles.innerHeader}>
-                    <Text style={styles.txtHodometro}>Defina seu hodometro!</Text>
+                    <Text style={styles.txtHodometro}>Olá, motorista!</Text>
                     <Text style={styles.txtSignIn}>Bom trabalho!</Text>
                 </View>
 
