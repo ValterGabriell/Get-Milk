@@ -12,10 +12,10 @@ import { users } from "../../../dto/users.json";
 import { useNavigation } from "@react-navigation/native";
 
 const DATA = [
-  {
-    id: 1,
-    title: "asdasd",
-  },
+  { id: "00", title: "Relâmpago McQueen" },
+  { id: "01", title: "Agente Tom Mate" },
+  { id: "02", title: "Doc Hudson" },
+  { id: "03", title: "Cruz Ramirez" },
 ];
 
 const Item = ({ title, navigation }) => (
