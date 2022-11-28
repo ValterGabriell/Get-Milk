@@ -1,3 +1,5 @@
+
+
 export default [
   {
     id: 1,
@@ -5,6 +7,7 @@ export default [
     hora: "10:00",
     venda: "25L",
     motorista: "Miguel",
+    mes:"dezembro",
     pagamento: "Pago",
   },
   {
@@ -13,6 +16,7 @@ export default [
     hora: "10:00",
     venda: "25L",
     motorista: "Miguel",
+    mes:"dezembro",
     pagamento: "Pago",
   },
   {
@@ -21,6 +25,7 @@ export default [
     hora: "10:00",
     venda: "25L",
     motorista: "Miguel",
+    mes:"novrmbro",
     pagamento: "Pago",
   },
   {
