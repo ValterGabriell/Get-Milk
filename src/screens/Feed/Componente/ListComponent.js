@@ -8,14 +8,16 @@ import {
   StatusBar,
   TouchableOpacity,
 } from "react-native";
-
+import { users } from "../../../dto/users.json";
 import { useNavigation } from "@react-navigation/native";
 import Coleta from '../../../services/Database/Coleta'
 
-
-
-
-
+const DATA = [
+  { id: "00", title: "Relâmpago McQueen" },
+  { id: "01", title: "Agente Tom Mate" },
+  { id: "02", title: "Doc Hudson" },
+  { id: "03", title: "Cruz Ramirez" },
+];
 
 
 const Item = ({ id, numAmostra, volumeLitro, tempTanque, compartimentoCaminhao, testeAlisoral, finalizada, navigation }) => (
@@ -41,12 +43,11 @@ const Item = ({ id, numAmostra, volumeLitro, tempTanque, compartimentoCaminhao, 
           <Text style={styles.button}>Coletar</Text>
         </TouchableOpacity>
     }
-
-
   </View>
 );
 
 const App = () => {
+
   const navigation = useNavigation()
   const renderItem = ({ item }) => <Item id={item.id} numAmostra={item.numAmostra} volumeLitro={item.volumeLitro} tempTanque={item.tempTanque} compartimentoCaminhao={item.compartimentoCaminhao} testeAlisoral={item.testeAlisoral} finalizada={item.finalizada} navigation={navigation} />;
   const [listData, setListData] = useState([])
@@ -61,7 +62,7 @@ const App = () => {
    })
 
 
-    
+   
   return (
     <SafeAreaView style={styles.container}>
       <FlatList
@@ -109,6 +110,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   button: {
+    color: "white",
     fontSize: 18,
   },
 });
