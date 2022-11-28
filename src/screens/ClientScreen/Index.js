@@ -13,6 +13,10 @@ import ListItem from "./Component/ListComponent";
 import results from "../../dto/ApiFake";
 import { StatusBar } from "expo-status-bar";
 
+
+const DATA = ["Janeiro", "fevereiro", "marco", "abril","maio", "junho", "julho", "agosto","setembro", "outubro", "novembro", "dezembro"]
+
+
 const ClientScreen = () => {
   const [selected, setSelected] = useState("");
   const [list, setList] = useState(results);
@@ -46,29 +50,30 @@ const ClientScreen = () => {
           </View>
         </View>
 
-        <ScrollView style={styles.middle}>
+
+        <SafeAreaView style={{flex:1}}>
           <View>
-            <View>
-              <MultipleSelectList
-                setSelected={(item) => setSelected(item)}
-                data={list}
-                saveV
-                onSelect={() => selected}
-                label="Categories"
-                placeholder="Filtrar meses"
-              />
-            </View>
-
-            <FlatList
-              data={list}
-              renderItem={({ item }) => <ListItem data={item} />}
-              keyExtractor={(item) => item.id}
+            <MultipleSelectList
+              data={DATA}
+              setSelected={(item) => setSelected(item)}
+              saveV
+              search={false}
+              onSelect={() => selected}
+              label="Clique para confirmar"
+              placeholder="Filtrar meses"
             />
-
-            <StatusBar style="light" />
           </View>
-          <View style={styles.insideMiddle}></View>
-        </ScrollView>
+
+          <FlatList
+            data={list}
+            renderItem={({ item }) => <ListItem data={item} />}
+            keyExtractor={(item) => item.id}
+          />
+
+          <StatusBar style="light" />
+        </SafeAreaView>
+        <View style={styles.insideMiddle}></View>
+
       </SafeAreaView>
     </>
   );
