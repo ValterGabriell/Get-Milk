@@ -6,7 +6,7 @@ import { FontAwesome5 } from '@expo/vector-icons'
 import CustomInput from '../../components/CustomInputText';
 import CustomButton from '../../components/CustomBtn';
 import { useNavigation } from '@react-navigation/native';
-import Car from '../../services/Database/Coleta'
+import Coleta from '../../services/Database/Coleta'
 import { checkConnected } from '../../services/Handle/NetworkConnection';
 
 
@@ -16,7 +16,14 @@ const Finalizar = (props) => {
     const [isEnabled, setIsEnabled] = useState(false);
     const [isPositive, setIsPostive] = useState("");
     const [isClicked, setIsClicked] = useState(false);
-    const title = props.route.params.title
+
+    const numAmostra = props.route.params.numAmostra
+    const volumeLitro = props.route.params.volumeLitro
+    const tempTanque = props.route.params.tempTanque
+    const compartimentoCaminhao = props.route.params.compartimentoCaminhao
+    const testeAlisoral = props.route.params.testeAlisoral
+    const finalizada = props.route.params.finalizada
+    const id = props.route.params.id
 
     const toggleSwitch = () => {
         setIsEnabled(previousState => !previousState)
@@ -36,12 +43,13 @@ const Finalizar = (props) => {
     }
 
 
-    function saveColeta(amostra, volume, temperatura) {
+    function atualizarColeta(id, amostra, volume, temperatura, compartimentoCaminhao, testeAlisoral) {
         clickButton()
-        const coleta = { brand: amostra, model:volume, hp:temperatura }
-        Car.create(coleta).then((res)=>{
-           navigation.navigate("Login_Screen")
-        }).catch((err)=>{
+        const coleta = { numAmostra:amostra,volumeLitro:volume,tempTanque: temperatura, compartimentoCaminhao:compartimentoCaminhao, testeAlisoral:testeAlisoral, finalizada:true }
+        Coleta.update(id, coleta).then((res)=>{
+            console.log("Objeto atualizado" + res);
+            navigation.navigate("Feed_Screen")
+        }).catch((err) => {
             console.log(err);
         })
     }
@@ -49,7 +57,10 @@ const Finalizar = (props) => {
 
     return <>
 
-        <SafeAreaView style={styles.root}>
+        {finalizada 
+            ?
+
+            <SafeAreaView style={styles.root}>
 
             <View style={styles.container}>
 
@@ -57,10 +68,10 @@ const Finalizar = (props) => {
 
                     <View style={styles.insideOfInsideContainer}>
                         <Text style={styles.txtColeta}>Coleta: </Text>
-                        <Text style={styles.txtNumeroColeta}>3d85r4</Text>
+                        <Text style={styles.txtNumeroColeta}>{finalizada}</Text>
                         <FontAwesome5 style={{ alignSelf: "center", marginLeft: "45%" }} name="times" size={32} color="#252525" onPress={() => cancel()} />
                     </View>
-                    <Text style={[styles.txtFazenda, styles.txtDono ]}>{title}</Text>
+                    <Text style={[styles.txtFazenda, styles.txtDono]}>{numAmostra}</Text>
                     <Text style={styles.txtFazenda}>Dono: João</Text>
 
                     <CustomInput placeholder={"Número da Amostra Ex. ABC123"} />
@@ -79,20 +90,62 @@ const Finalizar = (props) => {
                     />
 
                     <View style={{ flexDirection: "row", alignSelf: "center" }}>
-                        {
-                            isClicked && <ActivityIndicator size="large" color="#73c1ec" />
-                        }
-                        {
-                            !isClicked && <CustomButton onPress={() => {
-                                saveColeta("ABC12322", "835.4", 645)
-                            }} text={"Finalizar"} />
-                        }
+                      
+                            <CustomButton onPress={() => {
+                                navigation.navigate("Feed_Screen")
+                            }} text={"Coleta finalizada"} />
+                        
                     </View>
                 </View>
             </View>
 
         </SafeAreaView>
 
+            :
+
+            <SafeAreaView style={styles.root}>
+
+            <View style={styles.container}>
+
+                <View style={styles.insideContainer}>
+
+                    <View style={styles.insideOfInsideContainer}>
+                        <Text style={styles.txtColeta}>Coleta: </Text>
+                        <Text style={styles.txtNumeroColeta}>{finalizada}</Text>
+                        <FontAwesome5 style={{ alignSelf: "center", marginLeft: "45%" }} name="times" size={32} color="#252525" onPress={() => cancel()} />
+                    </View>
+                    <Text style={[styles.txtFazenda, styles.txtDono]}>{numAmostra}</Text>
+                    <Text style={styles.txtFazenda}>Dono: João</Text>
+
+                    <CustomInput placeholder={"Número da Amostra Ex. ABC123"} />
+                    <CustomInput placeholder={"Volume Litro Ex. 87,5"} type={"number-pad"} />
+                    <CustomInput placeholder={"Temperatura do Tanque Ex. 22,5"} type={"number-pad"} />
+                    <CustomInput placeholder={"Compartimento Caminhao Ex. AB2"} />
+
+                    <Text style={{ alignSelf: "center", fontWeight: "bold", color: "#252525" }}>Teste Alisoral: {isPositive}</Text>
+                    <Switch
+                        trackColor={{ false: "#767577", true: "#81b0ff" }}
+                        thumbColor={isEnabled ? "#73c1ec" : "#f4f3f4"}
+                        ios_backgroundColor="#3e3e3e"
+                        onValueChange={toggleSwitch}
+                        value={isEnabled}
+                        style={{ alignSelf: "center" }}
+                    />
+
+                    <View style={{ flexDirection: "row", alignSelf: "center" }}>
+                    <CustomButton onPress={() => {
+                                atualizarColeta(id, "ABC12322", 835.4, 645.5, "abc123", 0)
+                            }} text={"Finalizar"} />
+                    </View>
+                </View>
+            </View>
+
+        </SafeAreaView>
+
+        
+        }
+
+    
 
     </>;
 }
@@ -134,9 +187,9 @@ const styles = StyleSheet.create({
         color: "#252525",
         fontSize: 16
     },
-    txtDono:{
-        fontWeight:"bold",
-        color:"#252525"
+    txtDono: {
+        fontWeight: "bold",
+        color: "#252525"
     }
 });
 
