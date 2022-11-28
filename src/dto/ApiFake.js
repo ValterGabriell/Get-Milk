@@ -25,7 +25,7 @@ export default [
     hora: "10:00",
     venda: "25L",
     motorista: "Miguel",
-    mes:"novrmbro",
+    mes:"novembro",
     pagamento: "Pago",
   },
   {
@@ -34,6 +34,7 @@ export default [
     hora: "10:00",
     venda: "25L",
     motorista: "Miguel",
+    mes:"novembro",
     pagamento: "Pago",
   },
   {
@@ -42,6 +43,7 @@ export default [
     hora: "10:00",
     venda: "25L",
     motorista: "Miguel",
+    mes:"Janeiro",
     pagamento: "Pago",
   },
   {
@@ -50,6 +52,7 @@ export default [
     hora: "10:00",
     venda: "25L",
     motorista: "Miguel",
+    mes:"Janeiro",
     pagamento: "Pago",
   },
   {
@@ -58,6 +61,7 @@ export default [
     hora: "10:00",
     venda: "25L",
     motorista: "Miguel",
+    mes:"abril",
     pagamento: "Pago",
   },
 ];
