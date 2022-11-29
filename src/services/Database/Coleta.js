@@ -6,11 +6,11 @@ import db from "./SQLite";
  */
 db.transaction((tx) => {
   //<<<<<<<<<<<<<<<<<<<<<<<< USE ISSO APENAS DURANTE OS TESTES!!! >>>>>>>>>>>>>>>>>>>>>>>
-  //tx.executeSql("DROP TABLE cars;");
+  tx.executeSql("DROP TABLE minhascoleta;");
   //<<<<<<<<<<<<<<<<<<<<<<<< USE ISSO APENAS DURANTE OS TESTES!!! >>>>>>>>>>>>>>>>>>>>>>>
 
   tx.executeSql(
-    "CREATE TABLE IF NOT EXISTS cars (id INTEGER PRIMARY KEY AUTOINCREMENT, brand TEXT, model TEXT, hp INT);"
+    "CREATE TABLE IF NOT EXISTS minhascoleta (id INTEGER PRIMARY KEY, numAmostra TEXT, volumeLitro DOUBLE, tempTanque DOUBLE, compartimentoCaminhao TEXT, testeAlisoral INT, finalizada BOOLEAN);"
   );
 });
 
@@ -26,8 +26,27 @@ const create = (obj) => {
     db.transaction((tx) => {
       //comando SQL modificável
       tx.executeSql(
-        "INSERT INTO cars (brand, model, hp) values (?, ?, ?);",
-        [obj.brand, obj.model, obj.hp],
+        "INSERT INTO minhascoleta (id ,numAmostra, volumeLitro, tempTanque, compartimentoCaminhao, testeAlisoral, finalizada) values (?,?, ?, ?,?,?,?);",
+        [obj.id, obj.numAmostra, obj.volumeLitro, obj.tempTanque,obj.compartimentoCaminhao,obj.testeAlisoral,obj.finalizada],
+        //-----------------------
+        (_, { rowsAffected, insertId }) => {
+          if (rowsAffected > 0) resolve(insertId);
+          else reject("Error inserting obj: " + JSON.stringify(obj)); // insert falhou
+        },
+        (_, error) => reject(error) // erro interno em tx.executeSql
+      );
+    });
+  });
+};
+
+
+const createListBasedOnWeb = (obj) => {
+  return new Promise((resolve, reject) => {
+    db.transaction((tx) => {
+      //comando SQL modificável
+      tx.executeSql(
+        "INSERT INTO minhascoleta (id ,numAmostra, volumeLitro, tempTanque, compartimentoCaminhao, testeAlisoral,finalizada) values (?,?, ?, ?,?,?,?);",
+        [obj.id, obj.numAmostra, obj.volumeLitro, obj.tempTanque,obj.compartimentoCaminhao,obj.testeAlisoral, obj.finalizada],
         //-----------------------
         (_, { rowsAffected, insertId }) => {
           if (rowsAffected > 0) resolve(insertId);
@@ -51,8 +70,8 @@ const update = (id, obj) => {
     db.transaction((tx) => {
       //comando SQL modificável
       tx.executeSql(
-        "UPDATE cars SET brand=?, model=?, hp=? WHERE id=?;",
-        [obj.brand, obj.model, obj.hp, id],
+        "UPDATE minhascoleta SET numAmostra=?, volumeLitro=?, tempTanque=?,compartimentoCaminhao=?, testeAlisoral=?, finalizada=?  WHERE id=?;",
+        [obj.numAmostra, obj.volumeLitro, obj.tempTanque, obj.compartimentoCaminhao, obj.testeAlisoral, obj.finalizada,  id],
         //-----------------------
         (_, { rowsAffected }) => {
           if (rowsAffected > 0) resolve(rowsAffected);
@@ -76,7 +95,7 @@ const find = (id) => {
     db.transaction((tx) => {
       //comando SQL modificável
       tx.executeSql(
-        "SELECT * FROM cars WHERE id=?;",
+        "SELECT * FROM minhascoleta WHERE id=?;",
         [id],
         //-----------------------
         (_, { rows }) => {
@@ -102,7 +121,7 @@ const findByBrand = (brand) => {
     db.transaction((tx) => {
       //comando SQL modificável
       tx.executeSql(
-        "SELECT * FROM cars WHERE brand LIKE ?;",
+        "SELECT * FROM minhascoleta WHERE brand LIKE ?;",
         [brand],
         //-----------------------
         (_, { rows }) => {
@@ -128,7 +147,7 @@ const all = () => {
     db.transaction((tx) => {
       //comando SQL modificável
       tx.executeSql(
-        "SELECT * FROM cars;",
+        "SELECT * FROM minhascoleta;",
         [],
         //-----------------------
         (_, { rows }) => resolve(rows._array),
@@ -150,8 +169,25 @@ const remove = (id) => {
     db.transaction((tx) => {
       //comando SQL modificável
       tx.executeSql(
-        "DELETE FROM cars WHERE id=?;",
+        "DELETE FROM minhascoleta WHERE id=?;",
         [id],
+        //-----------------------
+        (_, { rowsAffected }) => {
+          resolve(rowsAffected);
+        },
+        (_, error) => reject(error) // erro interno em tx.executeSql
+      );
+    });
+  });
+};
+
+const removeAll = () => {
+  return new Promise((resolve, reject) => {
+    db.transaction((tx) => {
+      //comando SQL modificável
+      tx.executeSql(
+        "DELETE * FROM minhascoleta;",
+        
         //-----------------------
         (_, { rowsAffected }) => {
           resolve(rowsAffected);
@@ -164,9 +200,11 @@ const remove = (id) => {
 
 export default {
   create,
+  createListBasedOnWeb,
   update,
   find,
   findByBrand,
   all,
   remove,
+  removeAll
 };

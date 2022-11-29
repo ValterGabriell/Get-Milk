@@ -1,19 +1,54 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
-  FlatList,
+
   StyleSheet,
   SafeAreaView,
-  TouchableOpacity,
+
 } from "react-native";
 import Calendar from "../Feed/Data";
 import ListComponent from "./Componente/ListComponent";
-import { Button } from "react-native-paper";
+import Coleta from '../../services/Database/Coleta'
+import CustomButton from "../../components/CustomBtn";
 
-const FeedScreen = () => {
+const FeedScreen = (props) => {
+  const [finishedDay, setFinishedDay] = useState(false)
+
+  function reloadCalls() {
+    var listAux = []
+    Coleta.all().then((list) => {
+   
+      list.forEach((el) => {
+        if (el.finalizada == true) {
+          listAux.push(el)
+        }
+      })
+      if (listAux.length == list.length) {
+        setFinishedDay(true)
+      }
+    })
+
+
+  }
+
+  useEffect(() => {
+    (async () => {
+      reloadCalls()
+      props.navigation.addListener('focus', () => {
+        reloadCalls()
+      });
+
+    })()
+  }, [])
+
+
+
+
   return (
+
     <>
+
       <SafeAreaView style={{ backgroundColor: "#F1F1F1", height: "100%" }}>
         <View style={styles.header}>
           <View style={styles.innerHeader}>
@@ -25,10 +60,37 @@ const FeedScreen = () => {
           </View>
         </View>
 
-        <View style={styles.middle}>
-          <ListComponent></ListComponent>
-          <View style={styles.insideMiddle}></View>
-        </View>
+        {
+          finishedDay ? 
+
+          <View style={styles.middle}>
+            <View style={styles.insideMiddle}></View>
+            <CustomButton text={"Finalizar dia"} onPress={()=>{
+              setTimeout(()=>{
+                  Coleta.all().then((list)=>{
+                    list.forEach((el)=>{
+                      Coleta.remove(el.id).then((res)=>{
+                        console.log(res);
+                      }).catch((err)=>{
+                          console.log("err" + err.message);
+                      })
+                    })
+                  })
+                
+              }, 2000)
+               
+            }}/>
+            
+          </View> : 
+
+          <View style={styles.middle}>
+            <ListComponent></ListComponent>
+            <View style={styles.insideMiddle}></View>
+          
+          </View>
+        }
+
+
       </SafeAreaView>
     </>
   );
