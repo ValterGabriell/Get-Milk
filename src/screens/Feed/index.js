@@ -67,8 +67,10 @@ const FeedScreen = (props) => {
             <View style={styles.insideMiddle}></View>
             <CustomButton text={"Finalizar dia"} onPress={()=>{
               setTimeout(()=>{
+                  //removendo todas as coletdas do banco
                   Coleta.all().then((list)=>{
                     list.forEach((el)=>{
+                      //tem que primeiro enviar, e se der certo, remover
                       Coleta.remove(el.id).then((res)=>{
                         console.log(res);
                       }).catch((err)=>{

@@ -11,7 +11,7 @@ import {
 import Calendar from "../Feed/Data";
 import ListItem from "./Component/ListComponent";
 import { StatusBar } from "expo-status-bar";
-import Selecter from "./Component/Operadores/Selecter";
+
 const ClientScreen = () => {
   return (
     <>
@@ -26,18 +26,29 @@ const ClientScreen = () => {
           </View>
         </View>
 
-        <View style={styles.middle}>
-          <Selecter></Selecter>
+        <ScrollView style={styles.middle}>
+          <View>
+            <View>
+              <MultipleSelectList
+                setSelected={(item) => setSelected(item)}
+                data={list}
+                saveV
+                onSelect={() => selected}
+                label="Categories"
+                placeholder="Filtrar meses"
+              />
+            </View>
 
-          <FlatList
-            data={list}
-            renderItem={({ item }) => <ListItem data={item} />}
-            keyExtractor={(item) => item.id}
-          />
+            <FlatList
+              data={list}
+              renderItem={({ item }) => <ListItem data={item} />}
+              keyExtractor={(item) => item.id}
+            />
 
-          <StatusBar style="light" />
-        </View>
-        <View style={styles.insideMiddle}></View>
+            <StatusBar style="light" />
+          </View>
+          <View style={styles.insideMiddle}></View>
+        </ScrollView>
       </SafeAreaView>
     </>
   );
