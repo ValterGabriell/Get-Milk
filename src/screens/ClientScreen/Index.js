@@ -7,32 +7,12 @@ import {
   ScrollView,
   FlatList,
 } from "react-native";
-import { MultipleSelectList } from "react-native-dropdown-select-list";
+
 import Calendar from "../Feed/Data";
 import ListItem from "./Component/ListComponent";
-import results from "../../dto/ApiFake";
 import { StatusBar } from "expo-status-bar";
-
+import Selecter from "./Component/Operadores/Selecter";
 const ClientScreen = () => {
-  const [selected, setSelected] = useState("");
-  const [list, setList] = useState(results);
-
-  useEffect(() => {
-    if (selected === "") {
-      setList(results);
-    } else {
-      setList(
-        results.filter((item) => {
-          if (selected === "") {
-            return false;
-          } else {
-            return true;
-          }
-        })
-      );
-    }
-  }, [selected]);
-
   return (
     <>
       <SafeAreaView style={{ backgroundColor: "#F1F1F1", height: "100%" }}>
@@ -46,29 +26,18 @@ const ClientScreen = () => {
           </View>
         </View>
 
-        <ScrollView style={styles.middle}>
-          <View>
-            <View>
-              <MultipleSelectList
-                setSelected={(item) => setSelected(item)}
-                data={list}
-                saveV
-                onSelect={() => selected}
-                label="Categories"
-                placeholder="Filtrar meses"
-              />
-            </View>
+        <View style={styles.middle}>
+          <Selecter></Selecter>
 
-            <FlatList
-              data={list}
-              renderItem={({ item }) => <ListItem data={item} />}
-              keyExtractor={(item) => item.id}
-            />
+          <FlatList
+            data={list}
+            renderItem={({ item }) => <ListItem data={item} />}
+            keyExtractor={(item) => item.id}
+          />
 
-            <StatusBar style="light" />
-          </View>
-          <View style={styles.insideMiddle}></View>
-        </ScrollView>
+          <StatusBar style="light" />
+        </View>
+        <View style={styles.insideMiddle}></View>
       </SafeAreaView>
     </>
   );
