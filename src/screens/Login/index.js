@@ -9,7 +9,7 @@ import { users, coletas } from '../../dto/users.json'
 import { Snackbar } from 'react-native-paper';
 import { checkConnected } from '../../services/Handle/NetworkConnection';
 import Coleta from '../../services/Database/Coleta'
-
+import { signInUser } from '../../services/Axios/ApiAxios';
 
 
 const LoginScreen = () => {
@@ -21,6 +21,8 @@ const LoginScreen = () => {
   const navigation = useNavigation()
   const [visible, setVisible] = useState(false);
   const [messageOfSnackbar, setMessageOfSnackBar] = useState(false);
+
+  
   const onToggleSnackBar = (messageOfSnackbar) => {
     setVisible(!visible)
     setMessageOfSnackBar(messageOfSnackbar)
@@ -34,7 +36,7 @@ const LoginScreen = () => {
   function getDataAndChangeScreen(){
     coletas.forEach((coleta)=>{
       Coleta.create(coleta).then(()=>{
-        console.log("Coleta" + coleta.finalizada +  " criada");
+        console.log("Coleta" + coleta.id +  " criada");
         navigation.navigate("Hodometro_Screen")
       }).catch((ree)=>{
           onToggleSnackBar("Erro " + ree.message )
@@ -48,6 +50,8 @@ const LoginScreen = () => {
 
 
   function onButtonClicked() {
+    signInUser("12345678999", "BDSoft")
+    /*
     if (hasConnectionWithNetwork) {
       users.forEach((user) => {
         if (user.cpf == cpf) {
@@ -63,6 +67,7 @@ const LoginScreen = () => {
     } else {
     
     }
+    */
 
   }
 
