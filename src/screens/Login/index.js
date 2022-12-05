@@ -9,18 +9,23 @@ import { users, coletas } from '../../dto/users.json'
 import { Snackbar } from 'react-native-paper';
 import { checkConnected } from '../../services/Handle/NetworkConnection';
 import Coleta from '../../services/Database/Coleta'
-
+import { signInUser } from '../../services/Axios/ApiAxios';
 
 
 const LoginScreen = () => {
 
+
+ 
+
   const isConnected = checkConnected()
-  const [cpf, setCpf] = useState("987654321")
-  const [password, setPassword] = useState("321")
+  const [cpf, setCpf] = useState("12345678999")
+  const [password, setPassword] = useState("BDSoft")
   const [hasConnectionWithNetwork, setConnection] = useState(false)
   const navigation = useNavigation()
   const [visible, setVisible] = useState(false);
   const [messageOfSnackbar, setMessageOfSnackBar] = useState(false);
+
+
   const onToggleSnackBar = (messageOfSnackbar) => {
     setVisible(!visible)
     setMessageOfSnackBar(messageOfSnackbar)
@@ -31,39 +36,26 @@ const LoginScreen = () => {
     setConnection(isConnected)
   }, [])
 
-  function getDataAndChangeScreen(){
-    coletas.forEach((coleta)=>{
-      Coleta.create(coleta).then(()=>{
-        console.log("Coleta" + coleta.finalizada +  " criada");
+  function getDataAndChangeScreen() {
+    coletas.forEach((coleta) => {
+      Coleta.create(coleta).then(() => {
+        console.log("Coleta" + coleta.id + " criada");
         navigation.navigate("Hodometro_Screen")
-      }).catch((ree)=>{
-          onToggleSnackBar("Erro " + ree.message )
+      }).catch((ree) => {
+        onToggleSnackBar("Erro " + ree.message)
       })
     })
-    
-    
-   
+
+
+
   }
 
 
 
-  function onButtonClicked() {
+  function onButtonClicked(cpf, password, navigation) {
     if (hasConnectionWithNetwork) {
-      users.forEach((user) => {
-        if (user.cpf == cpf) {
-          if (user.senha == password) {
-            getDataAndChangeScreen()
-          } else {
-            onToggleSnackBar("Senha incorreta")
-          }
-        } else {
-          onToggleSnackBar("CPF incorreto")
-        }
-      })
-    } else {
-    
+      signInUser(cpf, password, navigation)
     }
-
   }
 
 
@@ -93,7 +85,7 @@ const LoginScreen = () => {
             <CustomInput value={cpf} setValue={setCpf} placeholder={"777.777.777-77"} type={"number-pad"} maxLength={11} />
             <Text style={styles.txtForm}>Digite sua senha:</Text>
             <CustomInput value={password} setValue={setPassword} placeholder={"******"} maxLength={11} secureTextEntry={true} />
-            <CustomButton onPress={onButtonClicked} text={"Entrar"} />
+            <CustomButton onPress={() => { onButtonClicked(cpf, password, navigation) }} text={"Entrar"} />
             <Text style={{ marginLeft: "4%" }} onPress={() => {
               /** trocar a rota de navegacao para trocar de tela */
               navigation.navigate("Hodometro_Screen")
@@ -113,7 +105,7 @@ const LoginScreen = () => {
           {messageOfSnackbar}
         </Snackbar>
 
-        
+
 
 
       </SafeAreaView> :

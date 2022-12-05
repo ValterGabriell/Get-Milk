@@ -1,10 +1,10 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export const storeData = async (id, value, navigation) => {
+export const storeData = async (id, value, navigation, route) => {
     try {
         const jsonValue = JSON.stringify(value)
         await AsyncStorage.setItem(id, jsonValue).then(()=>{
-            navigation.navigate("Feed_Screen")
+            navigation.navigate(route)
         }).catch((err)=>{
             console.log("Ocorreu um erro" + err);
         })
@@ -15,9 +15,9 @@ export const storeData = async (id, value, navigation) => {
     }
 }
 
-export const getData = async () => {
+export const getData = async (id) => {
     try {
-      const jsonValue = await AsyncStorage.getItem('0')
+      const jsonValue = await AsyncStorage.getItem(id)
       return jsonValue != null ? JSON.parse(jsonValue) : null;
     } catch(e) {
       // error reading value
