@@ -12,13 +12,17 @@ import ListComponent from "./Componente/ListComponent";
 import Coleta from '../../services/Database/Coleta'
 import CustomButton from "../../components/CustomBtn";
 
+
 const FeedScreen = (props) => {
   const [finishedDay, setFinishedDay] = useState(false)
 
+
+
+
   function reloadCalls() {
+    //variavel de auxilio para mudanças na UI de acordo se ainda tem ou nao coletas a serem feitas
     var listAux = []
     Coleta.all().then((list) => {
-   
       list.forEach((el) => {
         if (el.finalizada == true) {
           listAux.push(el)
@@ -28,7 +32,6 @@ const FeedScreen = (props) => {
         setFinishedDay(true)
       }
     })
-
 
   }
 
@@ -61,35 +64,39 @@ const FeedScreen = (props) => {
         </View>
 
         {
-          finishedDay ? 
+          finishedDay ?
 
-          <View style={styles.middle}>
-            <View style={styles.insideMiddle}></View>
-            <CustomButton text={"Finalizar dia"} onPress={()=>{
-              setTimeout(()=>{
-                  //removendo todas as coletdas do banco
-                  Coleta.all().then((list)=>{
-                    list.forEach((el)=>{
-                      //tem que primeiro enviar, e se der certo, remover
-                      Coleta.remove(el.id).then((res)=>{
-                        console.log(res);
-                      }).catch((err)=>{
+              <View style={styles.middle}>
+                <View style={styles.insideMiddle}></View>
+                <CustomButton text={"Finalizar dia"} onPress={() => {
+                  setTimeout(() => {
+                    //removendo todas as coletdas do banco
+                    Coleta.all().then((list) => {
+                      list.forEach((el) => {
+                        //tem que primeiro enviar, e se der certo, remover
+                        /**
+                         * function sendToAPI().then(Coleta.remove(id))...
+                         */
+                        Coleta.remove(el.id).then((res) => {
+                          console.log(res);
+                        }).catch((err) => {
                           console.log("err" + err.message);
+                        })
                       })
                     })
-                  })
-                
-              }, 2000)
-               
-            }}/>
-            
-          </View> : 
 
-          <View style={styles.middle}>
+                  }, 2000)
+
+                }} />
+
+              </View>
+              :
+             
+            <View style={styles.middle}>
             <ListComponent></ListComponent>
             <View style={styles.insideMiddle}></View>
-          
           </View>
+
         }
 
 

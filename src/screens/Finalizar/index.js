@@ -90,7 +90,6 @@ const Finalizar = (props) => {
                     />
 
                     <View style={{ flexDirection: "row", alignSelf: "center" }}>
-                      
                             <CustomButton onPress={() => {
                                 navigation.navigate("Feed_Screen")
                             }} text={"Coleta finalizada"} />
