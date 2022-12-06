@@ -51,7 +51,6 @@ const FeedScreen = (props) => {
   return (
 
     <>
-
       <SafeAreaView style={{ backgroundColor: "#F1F1F1", height: "100%" }}>
         <View style={styles.header}>
           <View style={styles.innerHeader}>

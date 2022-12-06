@@ -13,10 +13,6 @@ import { signInUser } from '../../services/Axios/ApiAxios';
 
 
 const LoginScreen = () => {
-
-
- 
-
   const isConnected = checkConnected()
   const [cpf, setCpf] = useState("12345678999")
   const [password, setPassword] = useState("BDSoft")
@@ -35,21 +31,6 @@ const LoginScreen = () => {
   useEffect(() => {
     setConnection(isConnected)
   }, [])
-
-  function getDataAndChangeScreen() {
-    coletas.forEach((coleta) => {
-      Coleta.create(coleta).then(() => {
-        console.log("Coleta" + coleta.id + " criada");
-        navigation.navigate("Hodometro_Screen")
-      }).catch((ree) => {
-        onToggleSnackBar("Erro " + ree.message)
-      })
-    })
-
-
-
-  }
-
 
 
   function onButtonClicked(cpf, password, navigation) {

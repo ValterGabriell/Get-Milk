@@ -4,6 +4,8 @@ import CustomInput from '../../../components/CustomInputText';
 import CustomButton from '../../../components/CustomBtn';
 import { Snackbar } from 'react-native-paper';
 
+
+
 const HodometroI = ({ onPress }) => {
 
     const [value, setValue] = useState("")

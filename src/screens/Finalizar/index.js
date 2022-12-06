@@ -23,7 +23,7 @@ const Finalizar = (props) => {
     const compartimentoCaminhao = props.route.params.compartimentoCaminhao
     const testeAlisoral = props.route.params.testeAlisoral
     const finalizada = props.route.params.finalizada
-    const id = props.route.params.id
+    const idColeta = props.route.params.idColeta
 
     const toggleSwitch = () => {
         setIsEnabled(previousState => !previousState)
@@ -43,108 +43,107 @@ const Finalizar = (props) => {
     }
 
 
-    function atualizarColeta(id, amostra, volume, temperatura, compartimentoCaminhao, testeAlisoral) {
-        clickButton()
-        const coleta = { numAmostra:amostra,volumeLitro:volume,tempTanque: temperatura, compartimentoCaminhao:compartimentoCaminhao, testeAlisoral:testeAlisoral, finalizada:true }
-        Coleta.update(id, coleta).then((res)=>{
-            console.log("Objeto atualizado" + res);
+    function atualizarColeta(idColeta, numAmostra, volume, temperatura, compartimentoCaminhao, testeAlisoral) {
+       
+        const coleta = { numAmostra: numAmostra, volumeLitro: volume, tempTanque: temperatura, compartimentoCaminhao: compartimentoCaminhao, testeAlisoral: testeAlisoral, finalizada: true }
+        Coleta.update(idColeta, coleta).then((res)=>{
             navigation.navigate("Feed_Screen")
-        }).catch((err) => {
-            console.log(err);
+        }).catch((err)=>{
+            console.log("erro");
         })
     }
 
 
     return <>
 
-        {finalizada 
+        {finalizada
             ?
 
             <SafeAreaView style={styles.root}>
 
-            <View style={styles.container}>
+                <View style={styles.container}>
 
-                <View style={styles.insideContainer}>
+                    <View style={styles.insideContainer}>
 
-                    <View style={styles.insideOfInsideContainer}>
-                        <Text style={styles.txtColeta}>Coleta: </Text>
-                        <Text style={styles.txtNumeroColeta}>{finalizada}</Text>
-                        <FontAwesome5 style={{ alignSelf: "center", marginLeft: "45%" }} name="times" size={32} color="#252525" onPress={() => cancel()} />
-                    </View>
-                    <Text style={[styles.txtFazenda, styles.txtDono]}>{numAmostra}</Text>
-                    <Text style={styles.txtFazenda}>Dono: João</Text>
+                        <View style={styles.insideOfInsideContainer}>
+                            <Text style={styles.txtColeta}>Coleta: </Text>
+                            <Text style={styles.txtNumeroColeta}>{finalizada}</Text>
+                            <FontAwesome5 style={{ alignSelf: "center", marginLeft: "45%" }} name="times" size={32} color="#252525" onPress={() => cancel()} />
+                        </View>
+                        <Text style={[styles.txtFazenda, styles.txtDono]}>{numAmostra}</Text>
+                        <Text style={styles.txtFazenda}>Dono: João</Text>
 
-                    <CustomInput placeholder={"Número da Amostra Ex. ABC123"} />
-                    <CustomInput placeholder={"Volume Litro Ex. 87,5"} type={"number-pad"} />
-                    <CustomInput placeholder={"Temperatura do Tanque Ex. 22,5"} type={"number-pad"} />
-                    <CustomInput placeholder={"Compartimento Caminhao Ex. AB2"} />
+                        <CustomInput placeholder={"Número da Amostra Ex. ABC123"} />
+                        <CustomInput placeholder={"Volume Litro Ex. 87,5"} type={"number-pad"} />
+                        <CustomInput placeholder={"Temperatura do Tanque Ex. 22,5"} type={"number-pad"} />
+                        <CustomInput placeholder={"Compartimento Caminhao Ex. AB2"} />
 
-                    <Text style={{ alignSelf: "center", fontWeight: "bold", color: "#252525" }}>Teste Alisoral: {isPositive}</Text>
-                    <Switch
-                        trackColor={{ false: "#767577", true: "#81b0ff" }}
-                        thumbColor={isEnabled ? "#73c1ec" : "#f4f3f4"}
-                        ios_backgroundColor="#3e3e3e"
-                        onValueChange={toggleSwitch}
-                        value={isEnabled}
-                        style={{ alignSelf: "center" }}
-                    />
+                        <Text style={{ alignSelf: "center", fontWeight: "bold", color: "#252525" }}>Teste Alisoral: {isPositive}</Text>
+                        <Switch
+                            trackColor={{ false: "#767577", true: "#81b0ff" }}
+                            thumbColor={isEnabled ? "#73c1ec" : "#f4f3f4"}
+                            ios_backgroundColor="#3e3e3e"
+                            onValueChange={toggleSwitch}
+                            value={isEnabled}
+                            style={{ alignSelf: "center" }}
+                        />
 
-                    <View style={{ flexDirection: "row", alignSelf: "center" }}>
+                        <View style={{ flexDirection: "row", alignSelf: "center" }}>
                             <CustomButton onPress={() => {
                                 navigation.navigate("Feed_Screen")
                             }} text={"Coleta finalizada"} />
-                        
+
+                        </View>
                     </View>
                 </View>
-            </View>
 
-        </SafeAreaView>
+            </SafeAreaView>
 
             :
 
             <SafeAreaView style={styles.root}>
 
-            <View style={styles.container}>
+                <View style={styles.container}>
 
-                <View style={styles.insideContainer}>
+                    <View style={styles.insideContainer}>
 
-                    <View style={styles.insideOfInsideContainer}>
-                        <Text style={styles.txtColeta}>Coleta: </Text>
-                        <Text style={styles.txtNumeroColeta}>{finalizada}</Text>
-                        <FontAwesome5 style={{ alignSelf: "center", marginLeft: "45%" }} name="times" size={32} color="#252525" onPress={() => cancel()} />
-                    </View>
-                    <Text style={[styles.txtFazenda, styles.txtDono]}>{numAmostra}</Text>
-                    <Text style={styles.txtFazenda}>Dono: João</Text>
+                        <View style={styles.insideOfInsideContainer}>
+                            <Text style={styles.txtColeta}>{`fazenda id: ${idColeta}`}</Text>
+                            <Text style={styles.txtNumeroColeta}>{finalizada}</Text>
+                            <FontAwesome5 style={{ alignSelf: "center", marginLeft: "45%" }} name="times" size={32} color="#252525" onPress={() => cancel()} />
+                        </View>
+                        <Text style={[styles.txtFazenda, styles.txtDono]}>{numAmostra}</Text>
+                        <Text style={styles.txtFazenda}>{`Dono fazenda ${idColeta}`}</Text>
 
-                    <CustomInput placeholder={"Número da Amostra Ex. ABC123"} />
-                    <CustomInput placeholder={"Volume Litro Ex. 87,5"} type={"number-pad"} />
-                    <CustomInput placeholder={"Temperatura do Tanque Ex. 22,5"} type={"number-pad"} />
-                    <CustomInput placeholder={"Compartimento Caminhao Ex. AB2"} />
+                        <CustomInput placeholder={"Número da Amostra Ex. ABC123"} />
+                        <CustomInput placeholder={"Volume Litro Ex. 87,5"} type={"number-pad"} />
+                        <CustomInput placeholder={"Temperatura do Tanque Ex. 22,5"} type={"number-pad"} />
+                        <CustomInput placeholder={"Compartimento Caminhao Ex. AB2"} />
 
-                    <Text style={{ alignSelf: "center", fontWeight: "bold", color: "#252525" }}>Teste Alisoral: {isPositive}</Text>
-                    <Switch
-                        trackColor={{ false: "#767577", true: "#81b0ff" }}
-                        thumbColor={isEnabled ? "#73c1ec" : "#f4f3f4"}
-                        ios_backgroundColor="#3e3e3e"
-                        onValueChange={toggleSwitch}
-                        value={isEnabled}
-                        style={{ alignSelf: "center" }}
-                    />
+                        <Text style={{ alignSelf: "center", fontWeight: "bold", color: "#252525" }}>Teste Alisoral: {isPositive}</Text>
+                        <Switch
+                            trackColor={{ false: "#767577", true: "#81b0ff" }}
+                            thumbColor={isEnabled ? "#73c1ec" : "#f4f3f4"}
+                            ios_backgroundColor="#3e3e3e"
+                            onValueChange={toggleSwitch}
+                            value={isEnabled}
+                            style={{ alignSelf: "center" }}
+                        />
 
-                    <View style={{ flexDirection: "row", alignSelf: "center" }}>
-                    <CustomButton onPress={() => {
-                                atualizarColeta(id, "ABC12322", 835.4, 645.5, "abc123", 0)
+                        <View style={{ flexDirection: "row", alignSelf: "center" }}>
+                            <CustomButton onPress={() => {
+                                atualizarColeta(idColeta, "ABC12322", 835.4, 645.5, "abc123", 0)
                             }} text={"Finalizar"} />
+                        </View>
                     </View>
                 </View>
-            </View>
 
-        </SafeAreaView>
+            </SafeAreaView>
 
-        
+
         }
 
-    
+
 
     </>;
 }
