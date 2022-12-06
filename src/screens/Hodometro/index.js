@@ -4,9 +4,10 @@ import { FontAwesome5 } from '@expo/vector-icons'
 import HodometroI from './Componentes/HodometroI';
 import HodometroF from './Componentes/HodometroF';
 import { useNavigation } from '@react-navigation/native';
-import { getData } from '../../services/Repository/DBMethods'
+import { getData, storeData } from '../../services/Repository/DBMethods'
 import { useEffect } from 'react';
 import CustomButton from '../../components/CustomBtn';
+import { getServiceOfDayTest } from '../../services/Axios/ApiAxios'
 
 
 
@@ -15,18 +16,19 @@ const Hodometro = () => {
     const isStaring = true
     const navigation = useNavigation()
     const [value, setValue] = useState(false)
+    const [userId, setUserId] = useState("0")
     //declarando funcoes
-   
+
 
     useEffect(() => {
-        getData("@hasCollect").then(result =>{
-            setValue(result)
+        getData("@userId").then(result => {
+            setUserId(result)
         })
     })
 
 
     function startWork() {
-        navigation.navigate("Feed_Screen")
+        getServiceOfDayTest(navigation)
     }
 
     function finishWork() {
@@ -35,36 +37,19 @@ const Hodometro = () => {
 
     return (
         <>
-            {
-                value ?
+            <SafeAreaView style={{ backgroundColor: '#73c1ec', height: "100%" }}>
+                <View style={styles.header}>
+                    <View style={styles.innerHeader}>
+                        <Text style={styles.txtHodometro}>{`Olá, ${userId}`}</Text>
+                        <Text style={styles.txtSignIn}>Bom trabalho!</Text>
+                    </View>
 
-                    <SafeAreaView style={{ backgroundColor: '#73c1ec', height: "100%" }}>
-                        <View style={styles.header}>
-                            <View style={styles.innerHeader}>
-                                <Text style={styles.txtHodometro}>Olá, motorista!</Text>
-                                <Text style={styles.txtSignIn}>Bom trabalho!</Text>
-                            </View>
+                    <FontAwesome5 style={{ marginRight: 16, marginTop: 8 }} name="fire" size={27} color="#F06795" />
+                </View>
+                {/* trecho de código que verifica se o usuario está iniciando ou finalizando a jornada de trabalho */}
+                {isStaring ? <HodometroI onPress={() => startWork()} /> : <HodometroF onPress={() => { finishWork() }} />}
+            </SafeAreaView>
 
-                            <FontAwesome5 style={{ marginRight: 16, marginTop: 8 }} name="fire" size={27} color="#F06795" />
-                        </View>
-                        {/* trecho de código que verifica se o usuario está iniciando ou finalizando a jornada de trabalho */}
-                        {isStaring ? <HodometroI onPress={() => startWork()} /> : <HodometroF onPress={() => { finishWork() }} />}
-                    </SafeAreaView>
-                    :
-                    <SafeAreaView style={{ backgroundColor: '#c3c3c3', height: "100%" }}>
-                        <View style={styles.header_two}>
-                            <View style={styles.innerHeader}>
-                                <Text style={styles.txtHodometro}>Olá, motorista!</Text>
-                                <Text style={styles.txtSignIn_Two}>Não há trabalhos a serem feitos!</Text>
-                            </View>
-                            <FontAwesome5 style={{ marginRight: 16, marginTop: 8 }} name="fire" size={27} color="#F06795" />
-                        </View>
-                        <CustomButton onPress={()=>{
-                            navigation.navigate("Login_Screen")
-                        }} text={"Voltar"}/>
-                    </SafeAreaView>
-
-            }
         </>
     );
 }

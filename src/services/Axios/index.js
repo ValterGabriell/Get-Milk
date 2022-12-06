@@ -1,8 +1,13 @@
 import axios from 'axios';
 const baseUrl = 'http://getmilk.bdsoft.com.br/getmilk/API/';
+const baseUrl_teste = 'http://192.168.43.98:3000/';
 
 const apiDevs = axios.create({
     baseURL: baseUrl
 })
 
-export default apiDevs
+const apiTeste = axios.create({
+    baseURL: baseUrl_teste
+})
+
+export default {apiDevs, apiTeste}

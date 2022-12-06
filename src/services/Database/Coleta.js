@@ -10,7 +10,7 @@ db.transaction((tx) => {
   //<<<<<<<<<<<<<<<<<<<<<<<< USE ISSO APENAS DURANTE OS TESTES!!! >>>>>>>>>>>>>>>>>>>>>>>
 
   tx.executeSql(
-    "CREATE TABLE IF NOT EXISTS minhascoleta (id INTEGER PRIMARY KEY, numAmostra TEXT, volumeLitro DOUBLE, tempTanque DOUBLE, compartimentoCaminhao TEXT, testeAlisoral INT, finalizada BOOLEAN);"
+    "CREATE TABLE IF NOT EXISTS minhascoleta (idColeta INTEGER PRIMARY KEY, numAmostra TEXT, volumeLitro DOUBLE, tempTanque DOUBLE, compartimentoCaminhao TEXT, testeAlisoral INT, finalizada BOOLEAN);"
   );
 });
 
@@ -26,8 +26,8 @@ const create = (obj) => {
     db.transaction((tx) => {
       //comando SQL modificável
       tx.executeSql(
-        "INSERT INTO minhascoleta (id ,numAmostra, volumeLitro, tempTanque, compartimentoCaminhao, testeAlisoral, finalizada) values (?,?, ?, ?,?,?,?);",
-        [obj.id, obj.numAmostra, obj.volumeLitro, obj.tempTanque,obj.compartimentoCaminhao,obj.testeAlisoral,obj.finalizada],
+        "INSERT INTO minhascoleta (idColeta ,numAmostra, volumeLitro, tempTanque, compartimentoCaminhao, testeAlisoral, finalizada) values (?,?, ?, ?,?,?,?);",
+        [obj.idColeta, obj.numAmostra, obj.volumeLitro, obj.tempTanque, obj.compartimentoCaminhao, obj.testeAlisoral, obj.finalizada],
         //-----------------------
         (_, { rowsAffected, insertId }) => {
           if (rowsAffected > 0) resolve(insertId);
@@ -40,13 +40,21 @@ const create = (obj) => {
 };
 
 
-const createListBasedOnWeb = (obj) => {
+
+/**
+ * CRIAÇÃO DE UM NOVO REGISTRO
+ * - Recebe um objeto;
+ * - Retorna uma Promise:
+ *  - O resultado da Promise é o ID do registro (criado por AUTOINCREMENT)
+ *  - Pode retornar erro (reject) caso exista erro no SQL ou nos parâmetros.
+ */
+const createCollect = (obj) => {
   return new Promise((resolve, reject) => {
     db.transaction((tx) => {
       //comando SQL modificável
       tx.executeSql(
-        "INSERT INTO minhascoleta (id ,numAmostra, volumeLitro, tempTanque, compartimentoCaminhao, testeAlisoral,finalizada) values (?,?, ?, ?,?,?,?);",
-        [obj.id, obj.numAmostra, obj.volumeLitro, obj.tempTanque,obj.compartimentoCaminhao,obj.testeAlisoral, obj.finalizada],
+        "INSERT INTO minhascoleta (collectId,odometerStart, odometerEnd, serviceId ,farmerId, farmerName, sampleNumber, volume, temperatureTank, alizaroTest, truckCompartment) values (?,?,?,?,?, ?, ?,?,?,?,?);",
+        [obj.collectId, obj.odometerStart,obj.odometerEnd, ,obj.serviceId, obj.farmerId, obj.farmerName, obj.sampleNumber, obj.volume, obj.temperatureTank, obj.alizaroTest, obj.truckCompartment],
         //-----------------------
         (_, { rowsAffected, insertId }) => {
           if (rowsAffected > 0) resolve(insertId);
@@ -57,6 +65,44 @@ const createListBasedOnWeb = (obj) => {
     });
   });
 };
+
+const createFarms = (obj) => {
+  return new Promise((resolve, reject) => {
+    db.transaction((tx) => {
+      //comando SQL modificável
+      tx.executeSql(
+        "INSERT INTO minhascoleta (farmId,farmName) values (?,?);",
+        [obj.farmId, obj.farmName],
+        //-----------------------
+        (_, { rowsAffected, insertId }) => {
+          if (rowsAffected > 0) resolve(insertId);
+          else reject("Error inserting obj: " + JSON.stringify(obj)); // insert falhou
+        },
+        (_, error) => reject(error) // erro interno em tx.executeSql
+      );
+    });
+  });
+};
+
+const createVehicles = (obj) => {
+  return new Promise((resolve, reject) => {
+    db.transaction((tx) => {
+      //comando SQL modificável
+      tx.executeSql(
+        "INSERT INTO minhascoleta (vehiclesManufacturer, vehicleModel, vehicleLicensePlat, vehicleFuel) values (?,?,?,?);",
+        [obj.vehiclesManufacturer, obj.vehicleModel,obj.vehicleLicensePlat, obj.vehicleFuel],
+        //-----------------------
+        (_, { rowsAffected, insertId }) => {
+          if (rowsAffected > 0) resolve(insertId);
+          else reject("Error inserting obj: " + JSON.stringify(obj)); // insert falhou
+        },
+        (_, error) => reject(error) // erro interno em tx.executeSql
+      );
+    });
+  });
+};
+
+
 
 /**
  * ATUALIZA UM REGISTRO JÁ EXISTENTE
@@ -65,13 +111,13 @@ const createListBasedOnWeb = (obj) => {
  *  - O resultado da Promise é a quantidade de registros atualizados;
  *  - Pode retornar erro (reject) caso o ID não exista ou então caso ocorra erro no SQL.
  */
-const update = (id, obj) => {
+const update = (idColeta, obj) => {
   return new Promise((resolve, reject) => {
     db.transaction((tx) => {
       //comando SQL modificável
       tx.executeSql(
-        "UPDATE minhascoleta SET numAmostra=?, volumeLitro=?, tempTanque=?,compartimentoCaminhao=?, testeAlisoral=?, finalizada=?  WHERE id=?;",
-        [obj.numAmostra, obj.volumeLitro, obj.tempTanque, obj.compartimentoCaminhao, obj.testeAlisoral, obj.finalizada,  id],
+        "UPDATE minhascoleta SET numAmostra=?, volumeLitro=?, tempTanque=?,compartimentoCaminhao=?, testeAlisoral=?, finalizada=?  WHERE idColeta=?;",
+        [obj.numAmostra, obj.volumeLitro, obj.tempTanque, obj.compartimentoCaminhao, obj.testeAlisoral, obj.finalizada, idColeta],
         //-----------------------
         (_, { rowsAffected }) => {
           if (rowsAffected > 0) resolve(rowsAffected);
@@ -90,17 +136,17 @@ const update = (id, obj) => {
  *  - O resultado da Promise é o objeto (caso exista);
  *  - Pode retornar erro (reject) caso o ID não exista ou então caso ocorra erro no SQL.
  */
-const find = (id) => {
+const find = (idColeta) => {
   return new Promise((resolve, reject) => {
     db.transaction((tx) => {
       //comando SQL modificável
       tx.executeSql(
-        "SELECT * FROM minhascoleta WHERE id=?;",
-        [id],
+        "SELECT * FROM minhascoleta WHERE idColeta=?;",
+        [idColeta],
         //-----------------------
         (_, { rows }) => {
           if (rows.length > 0) resolve(rows._array[0]);
-          else reject("Obj not found: id=" + id); // nenhum registro encontrado
+          else reject("Obj not found: id=" + idColeta); // nenhum registro encontrado
         },
         (_, error) => reject(error) // erro interno em tx.executeSql
       );
@@ -164,12 +210,12 @@ const all = () => {
  *  - O resultado da Promise a quantidade de registros removidos (zero indica que nada foi removido);
  *  - Pode retornar erro (reject) caso o ID não exista ou então caso ocorra erro no SQL.
  */
-const remove = (id) => {
+const remove = (idColeta) => {
   return new Promise((resolve, reject) => {
     db.transaction((tx) => {
       //comando SQL modificável
       tx.executeSql(
-        "DELETE FROM minhascoleta WHERE id=?;",
+        "DELETE FROM minhascoleta WHERE idColeta=?;",
         [id],
         //-----------------------
         (_, { rowsAffected }) => {
@@ -187,7 +233,7 @@ const removeAll = () => {
       //comando SQL modificável
       tx.executeSql(
         "DELETE * FROM minhascoleta;",
-        
+
         //-----------------------
         (_, { rowsAffected }) => {
           resolve(rowsAffected);
@@ -200,7 +246,6 @@ const removeAll = () => {
 
 export default {
   create,
-  createListBasedOnWeb,
   update,
   find,
   findByBrand,
