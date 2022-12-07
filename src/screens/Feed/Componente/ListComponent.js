@@ -7,9 +7,11 @@ import {
   Text,
   StatusBar,
   TouchableOpacity,
+  ActivityIndicator
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Coleta from '../../../services/Database/Coleta'
+import CustomButton from "../../../components/CustomBtn";
 
 
 
@@ -45,13 +47,22 @@ const App = () => {
   const navigation = useNavigation()
   const renderItem = ({ item }) => <Item idColeta={item.idColeta} numAmostra={item.numAmostra} volumeLitro={item.volumeLitro} tempTanque={item.tempTanque} compartimentoCaminhao={item.compartimentoCaminhao} testeAlisoral={item.testeAlisoral} finalizada={item.finalizada} navigation={navigation} />;
   const [listData, setListData] = useState([])
-
+  const [finishedDay, setFinishedDay] = useState(false)
+  const [showIndicator, setShowIndicator] = useState(false);
 
   useEffect(() => {
     navigation.addListener('focus', () => {
+      var listAux = []
       Coleta.all().then((list) => {
-        console.log(list);
         setListData(list)
+        list.forEach((el) => {
+          if (el.finalizada == true) {
+            listAux.push(el)
+          }
+        })
+        if (listAux.length == list.length) {
+          setFinishedDay(true)
+        }
       })
     });
   })
@@ -59,13 +70,46 @@ const App = () => {
 
 
   return (
-    <SafeAreaView style={styles.container}>
-      <FlatList
-        data={listData}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.idColeta}
-      />
-    </SafeAreaView>
+    <>
+      {
+        finishedDay ?
+          <SafeAreaView style={styles.container}>
+            <Text style={[styles.title, { alignSelf: "center" }]}>Parabéns por mais um dia concluído!</Text>
+            <CustomButton text={"Encerrar"} onPress={() => {
+                  setShowIndicator(true)
+              //removendo todas as coletdas do banco
+              Coleta.all().then((list) => {
+                  list.forEach((el) => {
+                    setTimeout(() => {
+                      console.log("Enviando coleta: " + el.idColeta);
+                      //tem que primeiro enviar, e se der certo, remover
+                      /**
+                       * function sendToAPI().then(Coleta.remove(id))...
+                       */
+                      Coleta.remove(el.idColeta).then((res) => {
+                       navigation.navigate("Login_Screen")
+                      }).catch((err) => {
+                        console.log("err" + err.message);
+                      })
+                    }, 2000)
+                  })                
+              })
+            }} />
+             <ActivityIndicator size="small" color="#0000ff" animating={showIndicator} />
+
+
+          </SafeAreaView> :
+          <SafeAreaView style={styles.container}>
+            <FlatList
+              data={listData}
+              renderItem={renderItem}
+              keyExtractor={(item) => item.idColeta}
+            />
+          </SafeAreaView>
+      }
+
+    </>
+
   );
 };
 

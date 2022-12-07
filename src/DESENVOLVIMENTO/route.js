@@ -19,13 +19,28 @@ app.get('/coletas_id_2', function (req, res) {
     connection.getConnection(function (err, connection) {
     
     // Executando a query MySQL (selecionar todos os dados da tabela usuário).
-    connection.query('SELECT * FROM tbcoleta where fk_Funcionario = 2', function (error, results, fields) {
+    connection.query('SELECT idColeta, NumAmostra, VolumeLitro, TempTanque, CompartimentoCaminhao, TesteAlisarol, Nome, Sobrenome FROM tbcoleta join tbfuncionario on tbcoleta.fk_Funcionario = tbfuncionario.idFuncionario join tbfazenda on tbcoleta.fk_Fazenda = tbfazenda.idFazenda where fk_Funcionario = 2', function (error, results, fields) {
       // Caso ocorra algum erro, não irá executar corretamente.if (error) throw error;
       
       // Pegando a 'resposta' do servidor pra nossa requisição. Ou seja, aqui ele vai mandar nossos dados.
       res.send(results)
     });
   });
+});
+
+// Criando uma rota GET que retorna os dados da tabela usuários.
+app.get('/get_username', function (req, res) {
+  // Conectando ao banco.
+  connection.getConnection(function (err, connection) {
+  
+  // Executando a query MySQL (selecionar todos os dados da tabela usuário).
+  connection.query('SELECT * FROM tbfuncionario where idFuncionario = 2', function (error, results, fields) {
+    // Caso ocorra algum erro, não irá executar corretamente.if (error) throw error;
+    
+    // Pegando a 'resposta' do servidor pra nossa requisição. Ou seja, aqui ele vai mandar nossos dados.
+    res.send(results)
+  });
+});
 });
 
 
