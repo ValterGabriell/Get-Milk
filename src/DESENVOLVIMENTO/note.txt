@@ -22,3 +22,5 @@ Object {
 
 
   **precisa tirar o hasCollect do async storage quando o usuario finaliza o dia
+
+   
