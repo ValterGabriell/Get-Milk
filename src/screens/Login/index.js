@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, SafeAreaView } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView,ActivityIndicator } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons'
 import CustomInput from '../../components/CustomInputText';
 import CustomButton from '../../components/CustomBtn';
@@ -20,6 +20,7 @@ const LoginScreen = () => {
   const navigation = useNavigation()
   const [visible, setVisible] = useState(false);
   const [messageOfSnackbar, setMessageOfSnackBar] = useState(false);
+  const [showIndicator, setShowIndicator] = useState(false);
 
 
   const onToggleSnackBar = (messageOfSnackbar) => {
@@ -34,8 +35,11 @@ const LoginScreen = () => {
 
 
   function onButtonClicked(cpf, password, navigation) {
+    setShowIndicator(true)
     if (hasConnectionWithNetwork) {
-      signInUser(cpf, password, navigation)
+      signInUser(cpf, password, navigation).then(()=>{
+        setShowIndicator(false)
+      })
     }
   }
 
@@ -67,6 +71,7 @@ const LoginScreen = () => {
             <Text style={styles.txtForm}>Digite sua senha:</Text>
             <CustomInput value={password} setValue={setPassword} placeholder={"******"} maxLength={11} secureTextEntry={true} />
             <CustomButton onPress={() => { onButtonClicked(cpf, password, navigation) }} text={"Entrar"} />
+            <ActivityIndicator size="small" color="#0000ff" animating={showIndicator} />
             <Text style={{ marginLeft: "4%" }} onPress={() => {
               /** trocar a rota de navegacao para trocar de tela */
               navigation.navigate("Hodometro_Screen")

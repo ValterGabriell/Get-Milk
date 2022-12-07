@@ -7,7 +7,7 @@ import CustomInput from '../../components/CustomInputText';
 import CustomButton from '../../components/CustomBtn';
 import { useNavigation } from '@react-navigation/native';
 import Coleta from '../../services/Database/Coleta'
-import { checkConnected } from '../../services/Handle/NetworkConnection';
+
 
 
 const Finalizar = (props) => {
@@ -16,6 +16,7 @@ const Finalizar = (props) => {
     const [isEnabled, setIsEnabled] = useState(false);
     const [isPositive, setIsPostive] = useState("");
     const [isClicked, setIsClicked] = useState(false);
+    const [showIndicator, setShowIndicator] = useState(false);
 
     const numAmostra = props.route.params.numAmostra
     const volumeLitro = props.route.params.volumeLitro
@@ -24,6 +25,9 @@ const Finalizar = (props) => {
     const testeAlisoral = props.route.params.testeAlisoral
     const finalizada = props.route.params.finalizada
     const idColeta = props.route.params.idColeta
+    
+
+
 
     const toggleSwitch = () => {
         setIsEnabled(previousState => !previousState)
@@ -34,17 +38,13 @@ const Finalizar = (props) => {
         }
     }
 
-    const clickButton = () => {
-        setIsClicked(true)
-    }
-
     function cancel() {
         navigation.navigate("Feed_Screen")
     }
 
 
     function atualizarColeta(idColeta, numAmostra, volume, temperatura, compartimentoCaminhao, testeAlisoral) {
-       
+        setShowIndicator(true)
         const coleta = { numAmostra: numAmostra, volumeLitro: volume, tempTanque: temperatura, compartimentoCaminhao: compartimentoCaminhao, testeAlisoral: testeAlisoral, finalizada: true }
         Coleta.update(idColeta, coleta).then((res)=>{
             navigation.navigate("Feed_Screen")
@@ -135,6 +135,7 @@ const Finalizar = (props) => {
                                 atualizarColeta(idColeta, "ABC12322", 835.4, 645.5, "abc123", 0)
                             }} text={"Finalizar"} />
                         </View>
+                        <ActivityIndicator size="small" color="#0000ff" animating={showIndicator} />
                     </View>
                 </View>
 

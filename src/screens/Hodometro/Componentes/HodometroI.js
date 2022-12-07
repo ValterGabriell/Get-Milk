@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, SafeAreaView, Text } from 'react-native';
+import { View, StyleSheet, SafeAreaView, Text,ActivityIndicator } from 'react-native';
 import CustomInput from '../../../components/CustomInputText';
 import CustomButton from '../../../components/CustomBtn';
 import { Snackbar } from 'react-native-paper';
@@ -10,6 +10,8 @@ const HodometroI = ({ onPress }) => {
 
     const [value, setValue] = useState("")
     const [visible, setVisible] = useState(false);
+    const [showIndicator, setShowIndicator] = useState(false);
+
 
     const [messageOfSnackbar, setMessageOfSnackBar] = useState(false);
     const onToggleSnackBar = (messageOfSnackbar) => {
@@ -20,6 +22,7 @@ const HodometroI = ({ onPress }) => {
 
 
     function isEmpty() {
+        setShowIndicator(true)
         if (value != "") {
             onPress()
         } else {
