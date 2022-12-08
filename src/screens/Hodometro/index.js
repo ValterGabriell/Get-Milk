@@ -4,9 +4,8 @@ import { FontAwesome5 } from '@expo/vector-icons'
 import HodometroI from './Componentes/HodometroI';
 import HodometroF from './Componentes/HodometroF';
 import { useNavigation } from '@react-navigation/native';
-import { getData, storeData } from '../../services/Repository/DBMethods'
+import { getData } from '../../services/Repository/DBMethods'
 import { useEffect } from 'react';
-import CustomButton from '../../components/CustomBtn';
 import { getServiceOfDayTest } from '../../services/Axios/ApiAxios'
 
 
@@ -15,11 +14,10 @@ const Hodometro = () => {
     //declarando variaveis
     const isStaring = true
     const navigation = useNavigation()
-    const [value, setValue] = useState(false)
     const [userId, setUserId] = useState("0")
+
+    
     //declarando funcoes
-
-
     useEffect(() => {
         getData("@userId").then(result => {
             setUserId(result)
@@ -28,6 +26,7 @@ const Hodometro = () => {
 
 
     function startWork() {
+    
         getServiceOfDayTest(navigation)
     }
 
@@ -47,7 +46,8 @@ const Hodometro = () => {
                     <FontAwesome5 style={{ marginRight: 16, marginTop: 8 }} name="fire" size={27} color="#F06795" />
                 </View>
                 {/* trecho de código que verifica se o usuario está iniciando ou finalizando a jornada de trabalho */}
-                {isStaring ? <HodometroI onPress={() => startWork()} /> : <HodometroF onPress={() => { finishWork() }} />}
+                {isStaring ? <HodometroI onPress={() => startWork()} />   : <HodometroF onPress={() => { finishWork() }} />}
+               
             </SafeAreaView>
 
         </>

@@ -216,7 +216,7 @@ const remove = (idColeta) => {
       //comando SQL modificável
       tx.executeSql(
         "DELETE FROM minhascoleta WHERE idColeta=?;",
-        [id],
+        [idColeta],
         //-----------------------
         (_, { rowsAffected }) => {
           resolve(rowsAffected);

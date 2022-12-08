@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
-
   StyleSheet,
   SafeAreaView,
 
@@ -14,7 +13,7 @@ import CustomButton from "../../components/CustomBtn";
 
 
 const FeedScreen = (props) => {
-  const [finishedDay, setFinishedDay] = useState(false)
+
 
 
 
@@ -35,21 +34,11 @@ const FeedScreen = (props) => {
 
   }
 
-  useEffect(() => {
-    (async () => {
-      reloadCalls()
-      props.navigation.addListener('focus', () => {
-        reloadCalls()
-      });
-
-    })()
-  }, [])
 
 
 
 
   return (
-
     <>
       <SafeAreaView style={{ backgroundColor: "#F1F1F1", height: "100%" }}>
         <View style={styles.header}>
@@ -61,44 +50,10 @@ const FeedScreen = (props) => {
             <Calendar></Calendar>
           </View>
         </View>
-
-        {
-          finishedDay ?
-
-              <View style={styles.middle}>
-                <View style={styles.insideMiddle}></View>
-                <CustomButton text={"Finalizar dia"} onPress={() => {
-                  setTimeout(() => {
-                    //removendo todas as coletdas do banco
-                    Coleta.all().then((list) => {
-                      list.forEach((el) => {
-                        //tem que primeiro enviar, e se der certo, remover
-                        /**
-                         * function sendToAPI().then(Coleta.remove(id))...
-                         */
-                        Coleta.remove(el.id).then((res) => {
-                          console.log(res);
-                        }).catch((err) => {
-                          console.log("err" + err.message);
-                        })
-                      })
-                    })
-
-                  }, 2000)
-
-                }} />
-
-              </View>
-              :
-             
-            <View style={styles.middle}>
-            <ListComponent></ListComponent>
-            <View style={styles.insideMiddle}></View>
-          </View>
-
-        }
-
-
+        <View style={styles.middle}>
+          <ListComponent></ListComponent>
+          <View style={styles.insideMiddle}></View>
+        </View>
       </SafeAreaView>
     </>
   );
@@ -150,6 +105,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   middle: {
+    flex: 1,
     backgroundColor: "#FFF",
     borderTopRightRadius: 32,
     borderTopLeftRadius: 32,
