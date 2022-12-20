@@ -1,57 +1,70 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, SafeAreaView, Text } from 'react-native';
+import { View, StyleSheet, SafeAreaView, Text, TextInput } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons'
 import HodometroI from './Componentes/HodometroI';
-import HodometroF from './Componentes/HodometroF';
 import { useNavigation } from '@react-navigation/native';
 import { getData } from '../../services/Repository/DBMethods'
 import { useEffect } from 'react';
-import { getServiceOfDayTest } from '../../services/Axios/ApiAxios'
-
+import { getServiceOfDay } from '../../services/Axios/ApiAxios'
+import CustomInput from '../../components/CustomInputText'
 
 
 const Hodometro = () => {
     //declarando variaveis
-    const isStaring = true
     const navigation = useNavigation()
-    const [userId, setUserId] = useState("0")
+    const [userId, setUserId] = useState("")
+    const [value, setValue] = useState("S")
+    const isStaring = true
 
-    
+
+
+
+
     //declarando funcoes
     useEffect(() => {
+        //recupera id do usuario
         getData("@userId").then(result => {
             setUserId(result)
         })
-    })
+    }, [])
 
 
     function startWork() {
-    
-        getServiceOfDayTest(navigation)
-    }
 
-    function finishWork() {
-        navigation.navigate("Login_Screen")
+        getServiceOfDay(value, userId, navigation)
+
     }
 
     return (
         <>
-            <SafeAreaView style={{ backgroundColor: '#73c1ec', height: "100%" }}>
+            <SafeAreaView style={{ backgroundColor: '#FFF', height: "100%" }}>
                 <View style={styles.header}>
                     <View style={styles.innerHeader}>
-                        <Text style={styles.txtHodometro}>{`Olá, ${userId}`}</Text>
+                        <Text style={styles.txtHodometro}>{`Olá, seu id é:  ${userId}`}</Text>
                         <Text style={styles.txtSignIn}>Bom trabalho!</Text>
                     </View>
 
                     <FontAwesome5 style={{ marginRight: 16, marginTop: 8 }} name="fire" size={27} color="#F06795" />
                 </View>
-                {/* trecho de código que verifica se o usuario está iniciando ou finalizando a jornada de trabalho */}
-                {isStaring ? <HodometroI onPress={() => startWork()} />   : <HodometroF onPress={() => { finishWork() }} />}
-               
+
+                <View style={{ backgroundColor: "#73c1ec", padding: 8, marginBottom: "50%" }}>
+                    <TextInput value={value}
+                        onChangeText={setValue}
+                        placeholder={"Odometro inicial"}
+                        style={styles.contanier}
+                        keyboardType={"number-pad"}
+                         />
+                    <HodometroI onPress={() => startWork()} />
+                </View>
+
+
             </SafeAreaView>
 
         </>
     );
+
+
+
 }
 
 const styles = StyleSheet.create({
@@ -63,6 +76,19 @@ const styles = StyleSheet.create({
         marginTop: "15%"
 
     },
+    contanier:{
+        backgroundColor: "white",
+        width: "90%",
+        marginLeft:"4%",
+        marginBottom:"2%",
+        height: "18%",
+        padding: 4,
+        fontWeight: '500',
+    },
+    insideSnack: {
+        backgroundColor: "#CCC",
+        marginTop: "95%"
+    },
     header_two: {
         backgroundColor: '#c3c3c3',
         flexDirection: 'row',
@@ -73,7 +99,11 @@ const styles = StyleSheet.create({
     },
     innerHeader: {
         marginLeft: 16,
-        marginTop: 8
+        marginTop: 8,
+        borderTopRightRadius: 32,
+        borderTopLeftRadius: 32,
+        borderRadius: 8
+
     },
     txtHodometro: {
         color: "#FFF",
@@ -96,8 +126,7 @@ const styles = StyleSheet.create({
     },
     middle: {
         backgroundColor: "#FFF",
-        borderTopRightRadius: 32,
-        borderTopLeftRadius: 32,
+
         height: "100%"
     },
     txtForm: {

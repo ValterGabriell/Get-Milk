@@ -7,12 +7,14 @@ import {
   Text,
   StatusBar,
   TouchableOpacity,
-  ActivityIndicator
+  ActivityIndicator,
+  TextInput
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Coleta from '../../../services/Database/Coleta'
 import CustomButton from "../../../components/CustomBtn";
-
+import { collect, endService } from "../../../services/Axios/ApiAxios";
+import CustomInput from "../../../components/CustomInputText";
 
 
 
@@ -49,6 +51,7 @@ const App = () => {
   const [listData, setListData] = useState([])
   const [finishedDay, setFinishedDay] = useState(false)
   const [showIndicator, setShowIndicator] = useState(false);
+  const [value, setValue] = useState("")
 
   useEffect(() => {
     navigation.addListener('focus', () => {
@@ -75,29 +78,34 @@ const App = () => {
         finishedDay ?
           <SafeAreaView style={styles.container}>
             <Text style={[styles.title, { alignSelf: "center" }]}>Parabéns por mais um dia concluído!</Text>
+            <TextInput value={value}
+              onChangeText={setValue}
+              placeholder={"Odometro final"}
+              style={styles.contanier}
+              keyboardType={"number-pad"}
+            />
             <CustomButton text={"Encerrar"} onPress={() => {
-                  setShowIndicator(true)
-              //removendo todas as coletdas do banco
+              setShowIndicator(true)
+              //RECUPERA TODAS AS COLETAS DO BANCO
               Coleta.all().then((list) => {
-                  list.forEach((el) => {
-                    setTimeout(() => {
-                      console.log("Enviando coleta: " + el.idColeta);
-                      //tem que primeiro enviar, e se der certo, remover
-                      /**
-                       * function sendToAPI().then(Coleta.remove(id))...
-                       */
-                      Coleta.remove(el.idColeta).then((res) => {
-                       navigation.navigate("Login_Screen")
+                list.forEach((el) => {
+                  //ENVIA AS COLETAS PARA A API
+                  collect(el.collectId, el.sampleNumber, el.volume, el.temperatureTank, el.alizaroTest, el.truckCompartment).then((res) => {
+                    //finaliza o servico
+                    endService().then((res) => {
+                      //remove as coletas do banco
+                      Coleta.remove(el.collectId).then((res) => {
+                        navigation.navigate("Login_Screen")
+                        setShowIndicator(false)
                       }).catch((err) => {
                         console.log("err" + err.message);
                       })
-                    }, 2000)
-                  })                
+                    })
+                  })
+                })
               })
             }} />
-             <ActivityIndicator size="small" color="#0000ff" animating={showIndicator} />
-
-
+            <ActivityIndicator size="small" color="#0000ff" animating={showIndicator} />
           </SafeAreaView> :
           <SafeAreaView style={styles.container}>
             <FlatList
@@ -151,7 +159,15 @@ const styles = StyleSheet.create({
   button: {
     color: "white",
     fontSize: 18,
-  },
+  },contanier:{
+    backgroundColor: "#CCC",
+    width: "90%",
+    marginLeft:"4%",
+    marginBottom:"2%",
+    height: "18%",
+    padding: 4,
+    fontWeight: '500',
+}
 });
 
 export default App;

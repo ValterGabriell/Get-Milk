@@ -6,6 +6,7 @@ import HodometroScreen from "../screens/Hodometro/index";
 import FeedScreen from "../screens/Feed/index";
 import FinalizarScreen from "../screens/Finalizar/index";
 import ClientScreen from "../screens/ClientScreen/Index";
+import EsqueceuSenha from "../screens/EsqueceuSenha/index";
 const Stack = createNativeStackNavigator();
 
 const AppRoutes = () => {
@@ -20,7 +21,7 @@ const AppRoutes = () => {
         <Stack.Screen
           name="Hodometro_Screen"
           options={{ headerShown: false }}
-          component={HodometroScreen}
+          component={FeedScreen}
         />
         <Stack.Screen
           name="Feed_Screen"
@@ -31,6 +32,11 @@ const AppRoutes = () => {
           name="Finalizar_Screen"
           options={{ headerShown: false }}
           component={FinalizarScreen}
+        />
+        <Stack.Screen
+          name="Esqueceu_Screen"
+          options={{ headerShown: false }}
+          component={EsqueceuSenha}
         />
       </Stack.Navigator>
     </NavigationContainer>
