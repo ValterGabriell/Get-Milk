@@ -1,57 +1,64 @@
 import apiDevs from './index'
 import apiTeste from './index'
-import { storeData } from '../Repository/DBMethods'
+import { storeData, storeDataWithoutNavigation } from '../Repository/DBMethods'
 import Coleta from '../Database/Coleta'
 
 
-
+//logar usuario
 export async function signInUser(login, password, navigation) {
     apiDevs.apiDevs.post('controller_login.php', { login: login, password: password }).then((result) => {
         var isSuccess = result.data.success
         if (isSuccess) {
             storeData("@userId", result.data.userId, navigation, "Hodometro_Screen")
         }
-       // getServiceOfDayTest(navigation)
     })
 }
 
-/**
- * metodo apenas para testes, api local
- * @param {} navigation 
- */
-export async function getServiceOfDayTest(navigation) {
-    console.log("chamou");
-    apiTeste.apiTeste.get("coletas_id_2").then((result) => {
-        var response = result.data
-        console.log("res");
-        if (response != null) {
-            response.forEach((coleta) => {
-                Coleta.create(coleta).then(() => {
-                    console.log("Coleta" + coleta.idColeta + " criada");
-                    storeData("@hasCollect", true, navigation, "Feed_Screen")
-                })
-            })
-        }
-    }).catch((err)=>{
-        console.log("err");
-        console.log(err.message);
-    })
-}
 
-async function getServiceOfDay(userId, navigation) {
+export async function getServiceOfDay(odometerStart, userId, navigation) {
     apiDevs.apiDevs.get(`controller_get_services.php?user_id=${userId}`).then((result) => {
         var response = result.data.success;
         if (response) {
-            response.collects.forEach((coleta) => {
-                Coleta.create(coleta).then(() => {
-                    console.log("Coleta" + coleta.idColeta + " criada");
-                    storeData("@hasCollect", response, navigation, "Feed_Screen")
-                }).catch((ree) => {
-                    onToggleSnackBar("Erro " + ree.message)
+            //recuperando os serviços
+            response.services.forEach((service) => {
+                //inicia o servico
+                apiDevs.apiDevs.post('controller_start_service.php', { serviceId: service.serviceId, odometerStart: odometerStart }).then(() => {
+                    apiDevs.apiDevs.get(`controller_get_collects.php?user_id=${userId}`).then((response) => {
+                        //se for sucesso, cria todas elas e salva no banco
+                        if (response.success) {
+                            response.collects.forEach((coleta) => {
+                                Coleta.create(coleta).then(() => {
+                                    console.log("Coleta" + coleta.idColeta + " criada");
+                                    storeData("@hasCollect", response, navigation, "Feed_Screen")
+                                }).catch((ree) => {
+                                    onToggleSnackBar("Erro " + ree.message)
+                                })
+                            })
+                        }else{
+                            console.log("erro coleta false");
+                        }
+                    }).catch((err)=>{
+                        console.log("erro get coletas: " + err.message);
+                    })
+
+                }).catch((err)=>{
+                    console.log("erro start service: " + err.message);
                 })
+            }).catch((err)=>{
+                console.log("erro get service: " + err.message);
             })
         } else {
             storeData("@hasCollect", response, navigation, "Hodometro_Screen")
+            console.log("erro success false, nao tem servico");
         }
     })
+}
+export async function collect(collectId, sampleNumber, volume, temperatureTank, alizarolTest, truckCompartment) {
+    apiDevs.apiDevs.post('controller_collect.php', { collectId: collectId, sampleNumber: sampleNumber, volume: volume, temperatureTank: temperatureTank, alizarolTest: alizarolTest, truckCompartment: truckCompartment }).then((result) => {
+        console.log("Coleta: " + collectId + " salva com sucesso");
+    })
+}
+
+export async function endService(serviceId, odometerEnd) {
+    apiDevs.apiDevs.post('controller_end_service.php', { serviceId: serviceId, odometerEnd: odometerEnd })
 }

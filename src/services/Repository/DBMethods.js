@@ -15,6 +15,17 @@ export const storeData = async (id, value, navigation, route) => {
     }
 }
 
+export const storeDataWithoutNavigation = async (id, value) => {
+    try {
+        const jsonValue = JSON.stringify(value)
+        await AsyncStorage.setItem(id, jsonValue)
+    
+    } catch (e) {
+        console.log(e);
+    
+    }
+}
+
 export const getData = async (id) => {
     try {
       const jsonValue = await AsyncStorage.getItem(id)

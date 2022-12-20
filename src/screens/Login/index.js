@@ -5,14 +5,13 @@ import { FontAwesome5 } from '@expo/vector-icons'
 import CustomInput from '../../components/CustomInputText';
 import CustomButton from '../../components/CustomBtn';
 import { useNavigation } from "@react-navigation/native";
-import { users, coletas } from '../../dto/users.json'
 import { Snackbar } from 'react-native-paper';
 import { checkConnected } from '../../services/Handle/NetworkConnection';
-import Coleta from '../../services/Database/Coleta'
 import { signInUser } from '../../services/Axios/ApiAxios';
 
 
 const LoginScreen = () => {
+  //variavel para testar se há conexao com a internet
   const isConnected = checkConnected()
   const [cpf, setCpf] = useState("12345678999")
   const [password, setPassword] = useState("BDSoft")
@@ -23,6 +22,7 @@ const LoginScreen = () => {
   const [showIndicator, setShowIndicator] = useState(false);
 
 
+  //metodo para mostrar uma snack bar
   const onToggleSnackBar = (messageOfSnackbar) => {
     setVisible(!visible)
     setMessageOfSnackBar(messageOfSnackbar)
@@ -34,6 +34,7 @@ const LoginScreen = () => {
   }, [])
 
 
+  //metodo que é chamado ao clicar no botao login
   function onButtonClicked(cpf, password, navigation) {
     setShowIndicator(true)
     if (hasConnectionWithNetwork) {
@@ -73,13 +74,9 @@ const LoginScreen = () => {
             <CustomButton onPress={() => { onButtonClicked(cpf, password, navigation) }} text={"Entrar"} />
             <ActivityIndicator size="small" color="#0000ff" animating={showIndicator} />
             <Text style={{ marginLeft: "4%" }} onPress={() => {
-              /** trocar a rota de navegacao para trocar de tela */
-              navigation.navigate("Hodometro_Screen")
+              navigation.navigate("Esqueceu_Sreen")
             }}>Esqueceu a senha?</Text>
-
           </View>
-
-
         </View>
 
         <Snackbar

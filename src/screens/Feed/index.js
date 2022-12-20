@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import {
   View,
   Text,
@@ -8,35 +8,10 @@ import {
 } from "react-native";
 import Calendar from "../Feed/Data";
 import ListComponent from "./Componente/ListComponent";
-import Coleta from '../../services/Database/Coleta'
-import CustomButton from "../../components/CustomBtn";
+
 
 
 const FeedScreen = (props) => {
-
-
-
-
-
-  function reloadCalls() {
-    //variavel de auxilio para mudanças na UI de acordo se ainda tem ou nao coletas a serem feitas
-    var listAux = []
-    Coleta.all().then((list) => {
-      list.forEach((el) => {
-        if (el.finalizada == true) {
-          listAux.push(el)
-        }
-      })
-      if (listAux.length == list.length) {
-        setFinishedDay(true)
-      }
-    })
-
-  }
-
-
-
-
 
   return (
     <>
