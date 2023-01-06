@@ -19,7 +19,11 @@ const HodometroI = ({ onPress }) => {
     return <>
         <SafeAreaView style={styles.middle}>
             <View style={styles.insideMiddle}>
+                         
+                         
+            <Text style={styles.txtSignIn}>Caso voce nao possuoa coletas agendadas, retornará para a tela inicial!</Text>
                 <CustomButton onPress={click} text={"Iniciar Jornada!"} />
+
             </View>
 
 

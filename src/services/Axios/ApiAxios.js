@@ -30,8 +30,6 @@ export async function getServiceOfDay(odometerStart, userId, navigation) {
                                 Coleta.create(coleta).then(() => {
                                     console.log("Coleta" + coleta.idColeta + " criada");
                                     storeData("@hasCollect", response, navigation, "Feed_Screen")
-                                }).catch((ree) => {
-                                    onToggleSnackBar("Erro " + ree.message)
                                 })
                             })
                         }else{
@@ -48,8 +46,8 @@ export async function getServiceOfDay(odometerStart, userId, navigation) {
                 console.log("erro get service: " + err.message);
             })
         } else {
-            storeData("@hasCollect", response, navigation, "Hodometro_Screen")
-            console.log("erro success false, nao tem servico");
+            storeData("@hasCollect", response, navigation, "Login_Screen")
+            
         }
     })
 }

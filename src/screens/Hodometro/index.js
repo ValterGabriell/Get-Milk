@@ -13,7 +13,7 @@ const Hodometro = () => {
     //declarando variaveis
     const navigation = useNavigation()
     const [userId, setUserId] = useState("")
-    const [value, setValue] = useState("S")
+    const [value, setValue] = useState("")
     const isStaring = true
 
 
@@ -42,6 +42,7 @@ const Hodometro = () => {
                     <View style={styles.innerHeader}>
                         <Text style={styles.txtHodometro}>{`Olá, seu id é:  ${userId}`}</Text>
                         <Text style={styles.txtSignIn}>Bom trabalho!</Text>
+                       
                     </View>
 
                     <FontAwesome5 style={{ marginRight: 16, marginTop: 8 }} name="fire" size={27} color="#F06795" />
